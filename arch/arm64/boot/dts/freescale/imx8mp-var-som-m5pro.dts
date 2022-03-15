@@ -785,7 +785,6 @@
 	status = "okay";
 };
 
-#ifdef SIMPLE_GPIO
 &gpio1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio1>;
@@ -795,6 +794,7 @@
 		gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
 		input;
 		line-name = "factory_n";
+		status = "okay";
 	};
 };
 
@@ -807,6 +807,7 @@
 		gpios = <&gpio4 28 GPIO_ACTIVE_LOW>;
 		input;
 		line-name = "trigin1";
+		status = "okay";
 	};
 
 	trigin2-hog {
@@ -814,6 +815,7 @@
 		gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
 		input;
 		line-name = "trigin2";
+		status = "okay";
 	};
 
 	trigin3-hog {
@@ -821,6 +823,7 @@
 		gpios = <&gpio4 30 GPIO_ACTIVE_LOW>;
 		input;
 		line-name = "trigin3";
+		status = "okay";
 	};
 
 	trigin4-hog {
@@ -828,6 +831,7 @@
 		gpios = <&gpio4 31 GPIO_ACTIVE_LOW>;
 		input;
 		line-name = "trigin4";
+		status = "okay";
 	};
 };
 
@@ -840,6 +844,7 @@
 		gpios = <&gpio5 0 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "trigout1";
+		status = "okay";
 	};
 
 	trigout2-hog {
@@ -847,6 +852,7 @@
 		gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "trigout2";
+		status = "okay";
 	};
 
 	trigout3-hog {
@@ -854,6 +860,7 @@
 		gpios = <&gpio5 2 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "trigout3";
+		status = "okay";
 	};
 
 	hwid0-hog {
@@ -861,6 +868,7 @@
 		gpios = <&gpio5 6 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwid0";
+		status = "okay";
 	};
 
 	hwid1-hog {
@@ -868,6 +876,7 @@
 		gpios = <&gpio5 7 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwid1";
+		status = "okay";
 	};
 
 	hwid2-hog {
@@ -875,6 +884,7 @@
 		gpios = <&gpio5 8 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwid2";
+		status = "okay";
 	};
 
 	hwid3-hog {
@@ -882,6 +892,7 @@
 		gpios = <&gpio5 9 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwid3";
+		status = "okay";
 	};
 
 	swoff-hog {
@@ -889,6 +900,7 @@
 		gpios = <&gpio5 10 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "swoff";
+		status = "okay";
 	};
 
 	pwrledsel-hog {
@@ -896,6 +908,7 @@
 		gpios = <&gpio5 12 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "pwrledsel";
+		status = "okay";
 	};
 
 	pwrled-hog {
@@ -903,6 +916,7 @@
 		gpios = <&gpio5 13 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "pwrled";
+		status = "okay";
 	};
 
 	hwrev0-hog {
@@ -910,6 +924,7 @@
 		gpios = <&gpio5 22 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwrev0";
+		status = "okay";
 	};
 
 	hwrev1-hog {
@@ -917,6 +932,7 @@
 		gpios = <&gpio5 23 GPIO_ACTIVE_HIGH>;
 		input;
 		line-name = "hwrev1";
+		status = "okay";
 	};
 
 	trigout4-hog {
@@ -924,6 +940,7 @@
 		gpios = <&gpio5 28 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "trigout4";
+		status = "okay";
 	};
 
 	trigout5-hog {
@@ -931,9 +948,11 @@
 		gpios = <&gpio5 29 GPIO_ACTIVE_HIGH>;
 		output-low;
 		line-name = "trigout5";
+		status = "okay";
 	};
 };
 
+#ifdef SIMPLE_GPIO_X
 #endif
 
 #ifdef SIMPLE_GPIO_X
@@ -1407,7 +1426,7 @@
 		>;
 	};
 #endif
-#ifdef SIMPLE_GPIO
+
 	pinctrl_gpio1: gpio1grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11					0x00
@@ -1442,5 +1461,6 @@
 		>;
 	};
 
+#ifdef SIMPLE_GPIO_X
 #endif
 };
