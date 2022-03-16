@@ -392,8 +392,8 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c4>;
 //	pinctrl-1 = <&pinctrl_i2c4_gpio>;
-	scl-gpios = <&gpio5 20 GPIO_ACTIVE_HIGH>;
-	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&gpio5 20 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+	sda-gpios = <&gpio5 21 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 	status = "okay";
 
 //	/* DS1337 RTC module */
@@ -432,8 +432,8 @@
 	clock-frequency = <400000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c2>;
-	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
-	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&gpio5 16 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+	sda-gpios = <&gpio5 17 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 	status = "okay";
 
 //	/* PCA9548A I2C MUX */
