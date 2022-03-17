@@ -785,177 +785,160 @@
 	status = "okay";
 };
 
+#if 0
 &gpio1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio1>;
-
+/*
 	factory_n-hog {
 		gpio-hog;
-		gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+		gpios = <11 GPIO_ACTIVE_LOW>;	// GPIO1_IO11
 		input;
 		line-name = "factory_n";
-		status = "okay";
 	};
+*/
 };
 
 &gpio4 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio4>;
-
+/*
 	trigin1-hog {
 		gpio-hog;
-		gpios = <&gpio4 28 GPIO_ACTIVE_LOW>;
+		gpios = <124 GPIO_ACTIVE_LOW>;	// GPIO4_IO28
 		input;
 		line-name = "trigin1";
-		status = "okay";
 	};
 
 	trigin2-hog {
 		gpio-hog;
-		gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
+		gpios = <125 GPIO_ACTIVE_LOW>;	// GPIO4_IO29
 		input;
 		line-name = "trigin2";
-		status = "okay";
 	};
 
 	trigin3-hog {
 		gpio-hog;
-		gpios = <&gpio4 30 GPIO_ACTIVE_LOW>;
+		gpios = <126 GPIO_ACTIVE_LOW>;	// GPIO4_IO30
 		input;
 		line-name = "trigin3";
-		status = "okay";
 	};
 
 	trigin4-hog {
 		gpio-hog;
-		gpios = <&gpio4 31 GPIO_ACTIVE_LOW>;
+		gpios = <127 GPIO_ACTIVE_LOW>;	// GPIO4_IO31
 		input;
 		line-name = "trigin4";
-		status = "okay";
 	};
+*/
 };
 
 &gpio5 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio5>;
-
+/*
 	trigout1-hog {
 		gpio-hog;
-		gpios = <&gpio5 0 GPIO_ACTIVE_HIGH>;
+		gpios = <128 GPIO_ACTIVE_HIGH>;	// GPIO5_IO00
 		output-low;
 		line-name = "trigout1";
-		status = "okay";
 	};
 
 	trigout2-hog {
 		gpio-hog;
-		gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
+		gpios = <129 GPIO_ACTIVE_HIGH>;	// GPIO5_IO01
 		output-low;
 		line-name = "trigout2";
-		status = "okay";
 	};
 
 	trigout3-hog {
 		gpio-hog;
-		gpios = <&gpio5 2 GPIO_ACTIVE_HIGH>;
+		gpios = <130 GPIO_ACTIVE_HIGH>;	// GPIO5_IO02
 		output-low;
 		line-name = "trigout3";
-		status = "okay";
 	};
 
 	hwid0-hog {
 		gpio-hog;
-		gpios = <&gpio5 6 GPIO_ACTIVE_HIGH>;
+		gpios = <134 GPIO_ACTIVE_HIGH>;	// GPIO5_IO06
 		input;
 		line-name = "hwid0";
-		status = "okay";
 	};
 
 	hwid1-hog {
 		gpio-hog;
-		gpios = <&gpio5 7 GPIO_ACTIVE_HIGH>;
+		gpios = <135 GPIO_ACTIVE_HIGH>;	// GPIO5_IO07
 		input;
 		line-name = "hwid1";
-		status = "okay";
 	};
 
 	hwid2-hog {
 		gpio-hog;
-		gpios = <&gpio5 8 GPIO_ACTIVE_HIGH>;
+		gpios = <136 GPIO_ACTIVE_HIGH>;	// GPIO5_IO08
 		input;
 		line-name = "hwid2";
-		status = "okay";
 	};
 
 	hwid3-hog {
 		gpio-hog;
-		gpios = <&gpio5 9 GPIO_ACTIVE_HIGH>;
+		gpios = <137 GPIO_ACTIVE_HIGH>;	// GPIO5_IO09
 		input;
 		line-name = "hwid3";
-		status = "okay";
 	};
 
 	swoff-hog {
 		gpio-hog;
-		gpios = <&gpio5 10 GPIO_ACTIVE_HIGH>;
+		gpios = <138 GPIO_ACTIVE_HIGH>;	// GPIO5_IO10
 		input;
 		line-name = "swoff";
-		status = "okay";
 	};
 
 	pwrledsel-hog {
 		gpio-hog;
-		gpios = <&gpio5 12 GPIO_ACTIVE_HIGH>;
+		gpios = <140 GPIO_ACTIVE_HIGH>;	// GPIO5_IO12
 		output-low;
 		line-name = "pwrledsel";
-		status = "okay";
 	};
 
 	pwrled-hog {
 		gpio-hog;
-		gpios = <&gpio5 13 GPIO_ACTIVE_HIGH>;
+		gpios = <141 GPIO_ACTIVE_HIGH>;	// GPIO5_IO13
 		output-low;
 		line-name = "pwrled";
-		status = "okay";
 	};
 
 	hwrev0-hog {
 		gpio-hog;
-		gpios = <&gpio5 22 GPIO_ACTIVE_HIGH>;
+		gpios = <150 GPIO_ACTIVE_HIGH>;	// GPIO5_IO22
 		input;
 		line-name = "hwrev0";
-		status = "okay";
 	};
 
 	hwrev1-hog {
 		gpio-hog;
-		gpios = <&gpio5 23 GPIO_ACTIVE_HIGH>;
+		gpios = <151 GPIO_ACTIVE_HIGH>;	// GPIO5_IO23
 		input;
 		line-name = "hwrev1";
-		status = "okay";
 	};
 
 	trigout4-hog {
 		gpio-hog;
-		gpios = <&gpio5 28 GPIO_ACTIVE_HIGH>;
+		gpios = <156 GPIO_ACTIVE_HIGH>;	// GPIO5_IO28
 		output-low;
 		line-name = "trigout4";
-		status = "okay";
 	};
 
 	trigout5-hog {
 		gpio-hog;
-		gpios = <&gpio5 29 GPIO_ACTIVE_HIGH>;
+		gpios = <157 GPIO_ACTIVE_HIGH>;	// GPIO5_IO29
 		output-low;
 		line-name = "trigout5";
-		status = "okay";
 	};
+*/
 };
-
-#ifdef SIMPLE_GPIO_X
 #endif
 
-#ifdef SIMPLE_GPIO_X
+//#ifdef SIMPLE_GPIO_X
 &gpio1 {
 	gpio-line-names = 
 		"",          // GPIO1_IO00
@@ -1131,7 +1114,7 @@
 		"",          // GPIO5_IO30
 		"";          // GPIO5_IO31
 };
-#endif
+//#endif
 
 &iomuxc {
 	pinctrl-names = "default";
@@ -1139,10 +1122,36 @@
 
 	pinctrl_hog: hoggrp {
 		fsl,pins = <
+//			MX8MP_IOMUXC_SD1_DATA4__I2C1_SCL				0x400001c2
+//			MX8MP_IOMUXC_SD1_DATA5__I2C1_SDA				0x400001c2
+
 			MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL			0x400001c2
 			MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA			0x400001c2
 			MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD				0x40000010
 			MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC				0x40000010
+
+
+			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11					0x00
+
+			MX8MP_IOMUXC_SAI3_RXFS__GPIO4_IO28					0x00
+			MX8MP_IOMUXC_SAI3_RXC__GPIO4_IO29					0x00
+			MX8MP_IOMUXC_SAI3_RXD__GPIO4_IO30					0x00
+			MX8MP_IOMUXC_SAI3_TXFS__GPIO4_IO31					0x00
+
+			MX8MP_IOMUXC_SAI3_TXC__GPIO5_IO00					0xc6
+			MX8MP_IOMUXC_SAI3_TXD__GPIO5_IO01					0xc6
+			MX8MP_IOMUXC_SAI3_MCLK__GPIO5_IO02					0xc6
+			MX8MP_IOMUXC_ECSPI1_SCLK__GPIO5_IO06				0x00
+			MX8MP_IOMUXC_ECSPI1_MOSI__GPIO5_IO07				0x00
+			MX8MP_IOMUXC_ECSPI1_MISO__GPIO5_IO08				0x00
+			MX8MP_IOMUXC_ECSPI1_SS0__GPIO5_IO09					0x00
+			MX8MP_IOMUXC_ECSPI2_SCLK__GPIO5_IO10				0x00
+			MX8MP_IOMUXC_ECSPI2_MISO__GPIO5_IO12				0xc6
+			MX8MP_IOMUXC_ECSPI2_SS0__GPIO5_IO13					0xc6
+			MX8MP_IOMUXC_UART1_RXD__GPIO5_IO22					0x00
+			MX8MP_IOMUXC_UART1_TXD__GPIO5_IO23					0x00
+			MX8MP_IOMUXC_UART4_RXD__GPIO5_IO28					0xc6
+			MX8MP_IOMUXC_UART4_TXD__GPIO5_IO29					0xc6
 		>;
 	};
 
@@ -1427,6 +1436,7 @@
 	};
 #endif
 
+/*
 	pinctrl_gpio1: gpio1grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11					0x00
@@ -1460,7 +1470,7 @@
 			MX8MP_IOMUXC_UART4_TXD__GPIO5_IO29					0xc6
 		>;
 	};
-
+*/
 #ifdef SIMPLE_GPIO_X
 #endif
 };
