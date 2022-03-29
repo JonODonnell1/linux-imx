@@ -92,6 +92,14 @@
 			sound-dai = <&dummy_dai2>;
 		};
 	};
+
+	extcon_usb1: extcon_usb1 {
+		compatible = "linux,extcon-usb-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_extcon>;
+		id-gpio = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
 };
 
 &aud2htx {
@@ -252,12 +260,12 @@
 };
 
 &usb_dwc3_0 {
-//	dr_mode = "otg";
 	dr_mode = "host";
+//	dr_mode = "otg";
 //	hnp-disable;
 //	srp-disable;
 //	adp-disable;
-//	extcon = <&extcon_usb1>;
+	extcon = <&extcon_usb1>;
 	status = "okay";
 };
 
@@ -325,178 +333,178 @@
 
 &gpio1 {
 	gpio-line-names = 
-		"",                      // GPIO1_IO00
-		"",                      // GPIO1_IO01
-		"WDOG1_WDOG_B",          // GPIO1_IO02
-		"",                      // GPIO1_IO03
-		"",                      // GPIO1_IO04
-		"",                      // GPIO1_IO05
-		"",                      // GPIO1_IO06
-		"",                      // GPIO1_IO07
-		"",                      // GPIO1_IO08
-		"",                      // GPIO1_IO09
-		"eqos_reset",            // GPIO1_IO10
-		"factory_n",             // GPIO1_IO11
-		"",                      // GPIO1_IO12
-		"",                      // GPIO1_IO13
-		"",                      // GPIO1_IO14
-		"sdreset_n",             // GPIO1_IO15
-		"ENET_QOS_MDC",          // GPIO1_IO16
-		"ENET_QOS_MDIO" ,        // GPIO1_IO17
-		"ENET_QOS_RGMII_TD3",    // GPIO1_IO18
-		"ENET_QOS_RGMII_TD2",    // GPIO1_IO19
-		"ENET_QOS_RGMII_TD1",    // GPIO1_IO20
-		"ENET_QOS_RGMII_TD0",    // GPIO1_IO21
-		"ENET_QOS_RGMII_TX_CTL", // GPIO1_IO22
-		"ENET_QOS_GEN_TX_CLK",   // GPIO1_IO23
-		"ENET_QOS_RGMII_RX_CTL", // GPIO1_IO24
-		"ENET_QOS_GEN_RX_CLK",   // GPIO1_IO25
-		"ENET_QOS_RGMII_RD0",    // GPIO1_IO26
-		"ENET_QOS_RGMII_RD1",    // GPIO1_IO27
-		"ENET_QOS_RGMII_RD2",    // GPIO1_IO28
-		"ENET_QOS_RGMII_RD3",    // GPIO1_IO29
-		"",                      // GPIO1_IO30
-		"";                      // GPIO1_IO31
+		"",                      // 000 GPIO1_IO00
+		"",                      // 001 GPIO1_IO01
+		"WDOG_B",                // 002 GPIO1_IO02
+		"",                      // 003 GPIO1_IO03
+		"",                      // 004 GPIO1_IO04
+		"",                      // 005 GPIO1_IO05
+		"",                      // 006 GPIO1_IO06
+		"",                      // 007 GPIO1_IO07
+		"",                      // 008 GPIO1_IO08
+		"",                      // 009 GPIO1_IO09
+		"eqos_reset",            // 010 GPIO1_IO10
+		"factory_n",             // 011 GPIO1_IO11
+		"",                      // 012 GPIO1_IO12
+		"",                      // 013 GPIO1_IO13
+		"USDHC2_CD",             // 014 GPIO1_IO14
+		"sdreset_n",             // 015 GPIO1_IO15
+		"ENET_MDC",              // 016 GPIO1_IO16
+		"ENET_MDIO" ,            // 017 GPIO1_IO17
+		"ENET_TD3",              // 018 GPIO1_IO18
+		"ENET_TD2",              // 019 GPIO1_IO19
+		"ENET_TD1",              // 020 GPIO1_IO20
+		"ENET_TD0",              // 021 GPIO1_IO21
+		"ENET_TX_CTL",           // 022 GPIO1_IO22
+		"ENET_TX_CLK",           // 023 GPIO1_IO23
+		"ENET_RX_CTL",           // 024 GPIO1_IO24
+		"ENET_RX_CLK",           // 025 GPIO1_IO25
+		"ENET_RD0",              // 026 GPIO1_IO26
+		"ENET_RD1",              // 027 GPIO1_IO27
+		"ENET_RD2",              // 028 GPIO1_IO28
+		"ENET_RD3",              // 029 GPIO1_IO29
+		"",                      // 030 GPIO1_IO30
+		"";                      // 031 GPIO1_IO31
 };
 &gpio2 {
 	gpio-line-names = 
-		"",                      // GPIO2_IO00
-		"",                      // GPIO2_IO01
-		"",                      // GPIO2_IO02
-		"",                      // GPIO2_IO03
-		"",                      // GPIO2_IO04
-		"",                      // GPIO2_IO05
-		"i2c1_scl",              // GPIO2_IO06
-		"i2c1_sda",              // GPIO2_IO07
-		"",                      // GPIO2_IO08
-		"",                      // GPIO2_IO09
-		"",                      // GPIO2_IO10
-		"",                      // GPIO2_IO11
-		"",                      // GPIO2_IO12
-		"USDHC2_CLK",            // GPIO2_IO13
-		"USDHC2_CMD",            // GPIO2_IO14
-		"USDHC2_DATA0",          // GPIO2_IO15
-		"USDHC2_DATA1",          // GPIO2_IO16
-		"USDHC2_DATA2",          // GPIO2_IO17
-		"USDHC2_DATA3",          // GPIO2_IO18
-		"",                      // GPIO2_IO19
-		"reg_eqos",              // GPIO2_IO20
-		"",                      // GPIO2_IO21
-		"",                      // GPIO2_IO22
-		"",                      // GPIO2_IO23
-		"",                      // GPIO2_IO24
-		"",                      // GPIO2_IO25
-		"",                      // GPIO2_IO26
-		"",                      // GPIO2_IO27
-		"",                      // GPIO2_IO28
-		"",                      // GPIO2_IO29
-		"",                      // GPIO2_IO30
-		"";                      // GPIO2_IO31
+		"",                      // 032 GPIO2_IO00
+		"",                      // 033 GPIO2_IO01
+		"",                      // 034 GPIO2_IO02
+		"",                      // 035 GPIO2_IO03
+		"",                      // 036 GPIO2_IO04
+		"",                      // 037 GPIO2_IO05
+		"i2c1_scl",              // 038 GPIO2_IO06
+		"i2c1_sda",              // 039 GPIO2_IO07
+		"",                      // 040 GPIO2_IO08
+		"",                      // 041 GPIO2_IO09
+		"",                      // 042 GPIO2_IO10
+		"",                      // 043 GPIO2_IO11
+		"",                      // 044 GPIO2_IO12
+		"USDHC2_CLK",            // 045 GPIO2_IO13
+		"USDHC2_CMD",            // 046 GPIO2_IO14
+		"USDHC2_D0",             // 047 GPIO2_IO15
+		"USDHC2_D1",             // 048 GPIO2_IO16
+		"USDHC2_D2",             // 049 GPIO2_IO17
+		"USDHC2_D3",             // 050 GPIO2_IO18
+		"",                      // 051 GPIO2_IO19
+		"reg_eqos",              // 052 GPIO2_IO20
+		"",                      // 053 GPIO2_IO21
+		"",                      // 054 GPIO2_IO22
+		"",                      // 055 GPIO2_IO23
+		"",                      // 056 GPIO2_IO24
+		"",                      // 057 GPIO2_IO25
+		"",                      // 058 GPIO2_IO26
+		"",                      // 059 GPIO2_IO27
+		"",                      // 060 GPIO2_IO28
+		"",                      // 061 GPIO2_IO29
+		"",                      // 062 GPIO2_IO30
+		"";                      // 063 GPIO2_IO31
 };
 &gpio3 {
 	gpio-line-names = 
-		"",                      // GPIO3_IO00
-		"",                      // GPIO3_IO01
-		"USDHC3_STROBE",         // GPIO3_IO02
-		"USDHC3_DATA5",          // GPIO3_IO03
-		"USDHC3_DATA6",          // GPIO3_IO04
-		"USDHC3_DATA7",          // GPIO3_IO05
-		"",                      // GPIO3_IO06
-		"",                      // GPIO3_IO07
-		"",                      // GPIO3_IO08
-		"",                      // GPIO3_IO09
-		"USDHC3_DATA0",          // GPIO3_IO10
-		"USDHC3_DATA1",          // GPIO3_IO11
-		"USDHC3_DATA2",          // GPIO3_IO12
-		"USDHC3_DATA3",          // GPIO3_IO13
-		"",                      // GPIO3_IO14
-		"USDHC3_DATA4",          // GPIO3_IO15
-		"",                      // GPIO3_IO16
-		"USDHC3_CLK",            // GPIO3_IO17
-		"USDHC3_CMD",            // GPIO3_IO18
-		"",                      // GPIO3_IO19
-		"",                      // GPIO3_IO20
-		"",                      // GPIO3_IO21
-		"",                      // GPIO3_IO22
-		"",                      // GPIO3_IO23
-		"",                      // GPIO3_IO24
-		"",                      // GPIO3_IO25
-		"HDMIMIX_HDMI_SCL",      // GPIO3_IO26
-		"HDMIMIX_HDMI_SDA",      // GPIO3_IO27
-		"HDMIMIX_HDMI_CEC",      // GPIO3_IO28
-		"HDMIMIX_HDMI_HPD",      // GPIO3_IO29
-		"",                      // GPIO3_IO30
-		"";                      // GPIO3_IO31
+		"",                      // 064 GPIO3_IO00
+		"",                      // 065 GPIO3_IO01
+		"USDHC3_STR",            // 066 GPIO3_IO02
+		"USDHC3_D5",             // 067 GPIO3_IO03
+		"USDHC3_D6",             // 068 GPIO3_IO04
+		"USDHC3_D7",             // 069 GPIO3_IO05
+		"",                      // 070 GPIO3_IO06
+		"",                      // 071 GPIO3_IO07
+		"",                      // 072 GPIO3_IO08
+		"",                      // 073 GPIO3_IO09
+		"USDHC3_D0",             // 074 GPIO3_IO10
+		"USDHC3_D1",             // 075 GPIO3_IO11
+		"USDHC3_D2",             // 076 GPIO3_IO12
+		"USDHC3_D3",             // 077 GPIO3_IO13
+		"",                      // 078 GPIO3_IO14
+		"USDHC3_D4",             // 079 GPIO3_IO15
+		"",                      // 080 GPIO3_IO16
+		"USDHC3_CLK",            // 081 GPIO3_IO17
+		"USDHC3_CMD",            // 082 GPIO3_IO18
+		"",                      // 083 GPIO3_IO19
+		"",                      // 084 GPIO3_IO20
+		"",                      // 085 GPIO3_IO21
+		"",                      // 086 GPIO3_IO22
+		"",                      // 087 GPIO3_IO23
+		"",                      // 088 GPIO3_IO24
+		"",                      // 089 GPIO3_IO25
+		"HDMI_SCL",              // 090 GPIO3_IO26
+		"HDMI_SDA",              // 091 GPIO3_IO27
+		"HDMI_CEC",              // 092 GPIO3_IO28
+		"HDMI_HPD",              // 093 GPIO3_IO29
+		"",                      // 094 GPIO3_IO30
+		"";                      // 095 GPIO3_IO31
 };
 &gpio4 {
 	gpio-line-names= 
-		"SAI1_RX_SYNC",          // GPIO4_IO00
-		"SAI1_RX_BCLK",          // GPIO4_IO01
-		"SAI1_RX_DATA00",        // GPIO4_IO02
-		"SAI1_RX_DATA01",        // GPIO4_IO03
-		"SAI1_RX_DATA02",        // GPIO4_IO04
-		"SAI1_RX_DATA03",        // GPIO4_IO05
-		"",                      // GPIO4_IO06
-		"",                      // GPIO4_IO07
-		"",                      // GPIO4_IO08
-		"",                      // GPIO4_IO09
-		"SAI1_TX_SYNC",          // GPIO4_IO10
-		"SAI1_TX_BCLK",          // GPIO4_IO11
-		"SAI1_TX_DATA00",        // GPIO4_IO12
-		"SAI1_TX_DATA01",        // GPIO4_IO13
-		"SAI1_TX_DATA02",        // GPIO4_IO14
-		"SAI1_TX_DATA03",        // GPIO4_IO15
-		"SAI1_TX_DATA04",        // GPIO4_IO16
-		"",                      // GPIO4_IO17
-		"",                      // GPIO4_IO18
-		"",                      // GPIO4_IO19
-		"SAI1_MCLK",             // GPIO4_IO20
-		"",                      // GPIO4_IO21
-		"",                      // GPIO4_IO22
-		"",                      // GPIO4_IO23
-		"SAI2_TX_SYNC",          // GPIO4_IO24
-		"SAI2_TX_BCLK",          // GPIO4_IO25
-		"SAI2_TX_DATA00",        // GPIO4_IO26
-		"SAI2_MCLK",             // GPIO4_IO27
-		"trigin1_n",             // GPIO4_IO28
-		"trigin2_n",             // GPIO4_IO29
-		"trigin3_n",             // GPIO4_IO30
-		"trigin4_n";             // GPIO4_IO31
+		"SAI1_RX_SYNC",          // 096 GPIO4_IO00
+		"SAI1_RX_BCLK",          // 097 GPIO4_IO01
+		"SAI1_RX_D00",           // 098 GPIO4_IO02
+		"SAI1_RX_D01",           // 099 GPIO4_IO03
+		"SAI1_RX_D02",           // 100 GPIO4_IO04
+		"SAI1_RX_D03",           // 101 GPIO4_IO05
+		"",                      // 102 GPIO4_IO06
+		"",                      // 103 GPIO4_IO07
+		"",                      // 104 GPIO4_IO08
+		"",                      // 105 GPIO4_IO09
+		"SAI1_TX_SYNC",          // 106 GPIO4_IO10
+		"SAI1_TX_BCLK",          // 107 GPIO4_IO11
+		"SAI1_TX_D00",           // 108 GPIO4_IO12
+		"SAI1_TX_D01",           // 109 GPIO4_IO13
+		"SAI1_TX_D02",           // 110 GPIO4_IO14
+		"SAI1_TX_D03",           // 111 GPIO4_IO15
+		"SAI1_TX_D04",           // 112 GPIO4_IO16
+		"",                      // 113 GPIO4_IO17
+		"",                      // 114 GPIO4_IO18
+		"",                      // 115 GPIO4_IO19
+		"SAI1_MCLK",             // 116 GPIO4_IO20
+		"",                      // 117 GPIO4_IO21
+		"",                      // 118 GPIO4_IO22
+		"",                      // 119 GPIO4_IO23
+		"SAI2_TX_SYNC",          // 120 GPIO4_IO24
+		"SAI2_TX_BCLK",          // 121 GPIO4_IO25
+		"SAI2_TX_D00",           // 122 GPIO4_IO26
+		"SAI2_MCLK",             // 123 GPIO4_IO27
+		"trigin1_n",             // 124 GPIO4_IO28
+		"trigin2_n",             // 125 GPIO4_IO29
+		"trigin3_n",             // 126 GPIO4_IO30
+		"trigin4_n";             // 127 GPIO4_IO31
 };
 &gpio5 {
 	gpio-line-names = 
-		"trigout1",              // GPIO5_IO00
-		"trigout2",              // GPIO5_IO01
-		"trigout3",              // GPIO5_IO02
-		"ctpint",                // GPIO5_IO03
-		"pmic_int",              // GPIO5_IO04
-		"ctpwake",               // GPIO5_IO05
-		"hwid0",                 // GPIO5_IO06
-		"hwid1",                 // GPIO5_IO07
-		"hwid2",                 // GPIO5_IO08
-		"hwid3",                 // GPIO5_IO09
-		"swoff",                 // GPIO5_IO10
-		"pcierst_n",             // GPIO5_IO11
-		"pwrledsel",             // GPIO5_IO12
-		"pwrled",                // GPIO5_IO13
-		"",                      // GPIO5_IO14
-		"",                      // GPIO5_IO15
-		"I2C2_SCL",              // GPIO5_IO16
-		"I2C2_SDA",              // GPIO5_IO17
-		"",                      // GPIO5_IO18
-		"",                      // GPIO5_IO19
-		"I2C4_SCL",              // GPIO5_IO20
-		"I2C4_SDA",              // GPIO5_IO21
-		"hwrev0",                // GPIO5_IO22
-		"hwrev1",                // GPIO5_IO23
-		"UART2_DCE_RX",          // GPIO5_IO24
-		"UART2_DCE_TX",          // GPIO5_IO25
-		"",                      // GPIO5_IO26
-		"",                      // GPIO5_IO27
-		"trigout4",              // GPIO5_IO28
-		"trigout5",              // GPIO5_IO29
-		"",                      // GPIO5_IO30
-		"";                      // GPIO5_IO31
+		"trigout1",              // 128 GPIO5_IO00
+		"trigout2",              // 129 GPIO5_IO01
+		"trigout3",              // 130 GPIO5_IO02
+		"ctpint",                // 131 GPIO5_IO03
+		"pmic_int",              // 132 GPIO5_IO04
+		"ctpwake",               // 133 GPIO5_IO05
+		"hwid0",                 // 134 GPIO5_IO06
+		"hwid1",                 // 135 GPIO5_IO07
+		"hwid2",                 // 136 GPIO5_IO08
+		"hwid3",                 // 137 GPIO5_IO09
+		"swoff",                 // 138 GPIO5_IO10
+		"pcierst_n",             // 139 GPIO5_IO11
+		"pwrledsel",             // 140 GPIO5_IO12
+		"pwrled",                // 141 GPIO5_IO13
+		"",                      // 142 GPIO5_IO14
+		"",                      // 143 GPIO5_IO15
+		"I2C2_SCL",              // 144 GPIO5_IO16
+		"I2C2_SDA",              // 145 GPIO5_IO17
+		"",                      // 146 GPIO5_IO18
+		"",                      // 147 GPIO5_IO19
+		"I2C4_SCL",              // 148 GPIO5_IO20
+		"I2C4_SDA",              // 149 GPIO5_IO21
+		"hwrev0",                // 150 GPIO5_IO22
+		"hwrev1",                // 151 GPIO5_IO23
+		"UART2_RX",              // 152 GPIO5_IO24
+		"UART2_TX",              // 153 GPIO5_IO25
+		"",                      // 154 GPIO5_IO26
+		"",                      // 155 GPIO5_IO27
+		"trigout4",              // 156 GPIO5_IO28
+		"trigout5",              // 157 GPIO5_IO29
+		"",                      // 158 GPIO5_IO30
+		"";                      // 159 GPIO5_IO31
 };
 
 &iomuxc {
@@ -643,6 +651,12 @@
 			MX8MP_IOMUXC_SAI2_TXFS__AUDIOMIX_SAI2_TX_SYNC		0xd6
 			MX8MP_IOMUXC_SAI2_TXC__AUDIOMIX_SAI2_TX_BCLK		0xd6
 			MX8MP_IOMUXC_SAI2_TXD0__AUDIOMIX_SAI2_TX_DATA00		0xd6
+		>;
+	};
+
+	pinctrl_extcon: extcongrp {
+		fsl,pins = <
+			MX8MP_IOMUXC_GPIO1_IO05__GPIO1_IO05				0x10
 		>;
 	};
 };
