@@ -4,7 +4,8 @@
  * Copyright 2020-2021 Variscite Ltd.
  */
 
-#include "imx8mp-var-som-ec_dsi_sai1.dtsi"
+ #include <dt-bindings/mux/mux.h>
+ #include "imx8mp-var-som-ec_dsi_sai1.dtsi"
 
 / {
 	model = "Variscite VAR-SOM-MX8M-PLUS-EC_DSI_SAI1 on M5Pro";
@@ -149,6 +150,18 @@
 		wakeup-source;
 		status = "okay";
 	};
+
+	icn6211@2c {
+		compatible = "dummy";
+		reg = <0x2c>;
+		status = "okay";
+	};
+
+	pi6cfgl601b@69 {
+		compatible = "dummy";
+		reg = <0x69>;
+		status = "okay";
+	};
 };
 
 &i2c2 {
@@ -158,6 +171,152 @@
 	scl-gpios = <&gpio5 16 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 	sda-gpios = <&gpio5 17 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 	status = "okay";
+
+	mfi@10 {
+		compatible = "dummy";
+		reg = <0x10>;
+		status = "okay";
+	};
+
+	mux@71 {
+		compatible = "nxp,pca9540";
+		reg = <0x71>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		idle-state =  <MUX_IDLE_AS_IS>;
+
+		i2c@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0>;
+
+			es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@1 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <1>;
+
+			es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@2 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <2>;
+
+			es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@3 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <3>;
+
+			es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@4 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <4>;
+
+			es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@5 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <5>;
+
+			es9820@20 {
+				compatible = "dummy";
+				reg = <0x20>;
+				status = "okay";
+			};
+
+			es9820@21 {
+				compatible = "dummy";
+				reg = <0x21>;
+				status = "okay";
+			};
+		};
+
+		i2c@6 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <6>;
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+
+		i2c@7 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <7>;
+
+			src4392@70 {
+				compatible = "dummy";
+				reg = <0x70>;
+				status = "okay";
+			};
+		};
+	};
 };
 
 &irqsteer_hdmi {
@@ -199,7 +358,6 @@
 &pcie {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_pcie>;
-//	reset-gpio = <&gpio4 21 GPIO_ACTIVE_LOW>;
 	reset-gpio = <&gpio5 11 GPIO_ACTIVE_LOW>;
 	ext_osc = <1>;
 	clocks = <&clk IMX8MP_CLK_HSIO_ROOT>,
@@ -615,15 +773,9 @@
 		>;
 	};
 
-//	pinctrl_extcon: extcongrp {
-//		fsl,pins = <
-//			MX8MP_IOMUXC_GPIO1_IO05__GPIO1_IO05					0x10
-//		>;
-//	};
-
 	pinctrl_pcie: pciegrp {
 		fsl,pins = <
-			MX8MP_IOMUXC_SAI2_RXFS__GPIO4_IO21				0x40
+			MX8MP_IOMUXC_ECSPI2_MOSI__GPIO5_IO11				0x40
 		>;
 	};
 	pinctrl_sai1: sai1grp {
