@@ -179,7 +179,7 @@
 	};
 
 	mux@71 {
-		compatible = "nxp,pca9540";
+		compatible = "nxp,pca9548";
 		reg = <0x71>;
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -190,13 +190,19 @@
 			#size-cells = <0>;
 			reg = <0>;
 
-			es9033@48 {
+			o1_es9033: es9033@48 {
 				compatible = "dummy";
 				reg = <0x48>;
 				status = "okay";
 			};
 
-			src4392@70 {
+			o1_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o1_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -208,13 +214,19 @@
 			#size-cells = <0>;
 			reg = <1>;
 
-			es9033@48 {
+			o2_es9033: es9033@48 {
 				compatible = "dummy";
 				reg = <0x48>;
 				status = "okay";
 			};
 
-			src4392@70 {
+			o2_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o2_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -226,13 +238,19 @@
 			#size-cells = <0>;
 			reg = <2>;
 
-			es9033@48 {
+			o3_es9033: es9033@48 {
 				compatible = "dummy";
 				reg = <0x48>;
 				status = "okay";
 			};
 
-			src4392@70 {
+			o3_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o3_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -244,13 +262,19 @@
 			#size-cells = <0>;
 			reg = <3>;
 
-			es9033@48 {
+			o4_es9033: es9033@48 {
 				compatible = "dummy";
 				reg = <0x48>;
 				status = "okay";
 			};
 
-			src4392@70 {
+			o4_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o4_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -262,13 +286,19 @@
 			#size-cells = <0>;
 			reg = <4>;
 
-			es9033@48 {
+			o5_es9033: es9033@48 {
 				compatible = "dummy";
 				reg = <0x48>;
 				status = "okay";
 			};
 
-			src4392@70 {
+			o5_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o5_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -280,15 +310,27 @@
 			#size-cells = <0>;
 			reg = <5>;
 
-			es9820@20 {
+			i1_es9820: es9820@20 {
 				compatible = "dummy";
 				reg = <0x20>;
 				status = "okay";
 			};
 
-			es9820@21 {
+			i1_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x24>;
+				status = "okay";
+			};
+
+			i2_es9820: es9820@21 {
 				compatible = "dummy";
 				reg = <0x21>;
+				status = "okay";
+			};
+
+			i2_es9820_sync: es9820@25 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x25>;
 				status = "okay";
 			};
 		};
@@ -298,7 +340,7 @@
 			#size-cells = <0>;
 			reg = <6>;
 
-			src4392@70 {
+			i3_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -310,7 +352,7 @@
 			#size-cells = <0>;
 			reg = <7>;
 
-			src4392@70 {
+			i4_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
