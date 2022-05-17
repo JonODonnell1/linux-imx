@@ -205,6 +205,8 @@ fail:
 		of_node_put(cpu_np);
 	if (codec_np)
 		of_node_put(codec_np);
+	if (cpu_pdev)
+		put_device(&cpu_pdev->dev);
 
 	return ret;
 }
