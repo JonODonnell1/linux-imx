@@ -51,50 +51,33 @@
 		status = "okay";
 	};
 
-	dummy_dai1: dummy_dai1 {
-		compatible = "snd-soc-dummy";
-		#sound-dai-cells = <0>;
+	dummy_dai1: dummy-dai1 {
+		compatible = "linux,dummy-codec";
+		//compatible = "linux,snd-soc-dummy";
 		status = "okay";
 	};
 
 
-	snd-sai1 {
-		compatible = "simple-audio-card";
+	sound-sai1 {
+		compatible = "fsl,imx-audio-dummy";
+		model = "dummy-audio-1";
+		audio-cpu = <&sai1>;
+		audio-codec = <&dummy_dai1>;
 		status = "okay";
-		simple-audio-card,name = "SAI1";
-		simple-audio-card,format = "i2s";
-		simple-audio-card,mclk-fs = <128>;
-		simple-audio-card,cpu {
-			sound-dai = <&sai1>;
-			frame-master;
-			bitclock-master;
-		};
-		simple-audio-card,codec {
-			sound-dai = <&dummy_dai1>;
-		};
 	};
 
 	dummy_dai2: dummy-dai2 {
-		compatible = "snd-soc-dummy";
-		#sound-dai-cells = <0>;
+		compatible = "linux,dummy-codec";
+		//compatible = "linux,snd-soc-dummy";
 		status = "okay";
 	};
 
 	sound-sai2 {
-		compatible = "simple-audio-card";
+		compatible = "fsl,imx-audio-dummy";
+		model = "dummy-audio-2";
+		audio-cpu = <&sai2>;
+		audio-codec = <&dummy_dai2>;
 		status = "okay";
-		simple-audio-card,name = "SAI2";
-		simple-audio-card,format = "i2s";
-		simple-audio-card,mclk-fs = <256>;
-		simple-audio-card,cpu {
-			sound-dai = <&sai2>;
-			frame-master;
-			bitclock-master;
-		};
-		simple-audio-card,codec {
-			#sound-dai-cells = <0>;
-			sound-dai = <&dummy_dai2>;
-		};
 	};
 
 	extcon_usb1: extcon_usb1 {
@@ -500,7 +483,6 @@
 };
 
 &sai1 {
-	#sound-dai-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_sai1>;
 	assigned-clocks = <&clk IMX8MP_CLK_SAI1>;
@@ -511,14 +493,18 @@
 		 <&clk IMX8MP_CLK_DUMMY>,
 		 <&audio_blk_ctrl IMX8MP_CLK_AUDIO_BLK_CTRL_SAI1_MCLK1>, 
 		 <&clk IMX8MP_CLK_DUMMY>,
-		 <&clk IMX8MP_CLK_DUMMY>;
-	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3";
-	fsl,sai-synchronous-rx;
+		 <&clk IMX8MP_CLK_DUMMY>,
+		 <&clk IMX8MP_AUDIO_PLL1_OUT>,
+		 <&clk IMX8MP_AUDIO_PLL2_OUT>;
+	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3", "pll8k", "pll11k";
+	fsl,sai-asynchronous;
+	fsl,sai-multi-lane;
+	fsl,dataline,dsd = <0 0xff 0xff>;
+	dmas = <&sdma2 0 25 0>, <&sdma2 1 25 0>;
 	status = "okay";
 };
 
 &sai2 {
-	#sound-dai-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_sai2>;
 	assigned-clocks = <&clk IMX8MP_CLK_SAI2>;
@@ -529,10 +515,11 @@
 		 <&clk IMX8MP_CLK_DUMMY>,
 		 <&clk IMX8MP_CLK_DUMMY>,
 		 <&audio_blk_ctrl IMX8MP_CLK_AUDIO_BLK_CTRL_SAI2_MCLK1>, 
-		 <&clk IMX8MP_CLK_DUMMY>;
-	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3";
+		 <&clk IMX8MP_CLK_DUMMY>,
+		 <&clk IMX8MP_AUDIO_PLL1_OUT>,
+		 <&clk IMX8MP_AUDIO_PLL2_OUT>;
+	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3", "pll8k", "pll11k";
 	fsl,sai-asynchronous;
-	fsl,sai-mclk-direction-output;
 	status = "okay";
 };
 
