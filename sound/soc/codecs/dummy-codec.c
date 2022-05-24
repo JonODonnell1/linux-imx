@@ -8,6 +8,7 @@
 #include <linux/module.h>
 #include <linux/platform_device.h>
 #include <sound/soc.h>
+#include <sound/pcm_params.h>
 
 #define DUMMY_CODEC_CHANNEL_MAX	384
 #define DUMMY_CODEC_RATES		SNDRV_PCM_RATE_8000_384000
@@ -26,6 +27,70 @@
 	SNDRV_PCM_FMTBIT_DSD_U32_LE | \
 	SNDRV_PCM_FMTBIT_IEC958_SUBFRAME_LE)
 
+static int dummy_codec_startup(struct snd_pcm_substream *substream,
+				struct snd_soc_dai *dai)
+{
+	dev_dbg(dai->dev, "%s\n", __func__);
+	return 0;
+}
+
+static int dummy_codec_hw_params(struct snd_pcm_substream *substream,
+				  struct snd_pcm_hw_params *params,
+				  struct snd_soc_dai *dai)
+{
+	dev_dbg(dai->dev, "%s: bclk %d, channels %u, rate %u, width %d\n", __func__,
+		snd_soc_params_to_bclk(params),
+		params_channels(params), params_rate(params), params_width(params));
+	return 0;
+}
+
+static int dummy_codec_mute(struct snd_soc_dai *dai, int mute, int direction)
+{
+	dev_dbg(dai->dev, "%s: mute %d, dir %d\n", __func__, mute, direction);
+	return 0;
+}
+
+static int dummy_codec_set_dai_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+{
+	dev_dbg(dai->dev, "%s: fmt %u\n", __func__, fmt);
+	return 0;
+}
+
+static int dummy_codec_set_pll(struct snd_soc_dai *dai, int pll_id, int source,
+				unsigned int freq_in, unsigned int freq_out)
+{
+	dev_dbg(dai->dev, "%s: pll %d, src %d, f_in %u, f_out %u\n", __func__,
+		pll_id, source, freq_in, freq_out);
+	return 0;
+}
+
+static int dummy_codec_set_dai_sysclk(struct snd_soc_dai *dai, int clk_id,
+				       unsigned int freq, int dir)
+{
+	dev_dbg(dai->dev, "%s: clk %d, freq %u, dir %d\n", __func__,
+		clk_id, freq, dir);
+	return 0;
+}
+
+static int dummy_codec_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx_mask,
+				     unsigned int rx_mask, int slots, int slot_width)
+{
+	dev_dbg(dai->dev, "%s: txmask %u, rxmask %u, slots %d, width %d\n", __func__,
+		tx_mask, rx_mask, slots, slot_width);
+	return 0;
+}
+
+static const struct snd_soc_dai_ops dummy_codec_dai_ops = {
+	.startup	= dummy_codec_startup,
+	.hw_params	= dummy_codec_hw_params,
+	.mute_stream	= dummy_codec_mute,
+	.set_fmt	= dummy_codec_set_dai_fmt,
+	.set_pll	= dummy_codec_set_pll,
+	.set_sysclk	= dummy_codec_set_dai_sysclk,
+	.set_tdm_slot	= dummy_codec_set_tdm_slot,
+	.no_capture_mute = 1,
+};
+
 static struct snd_soc_dai_driver dummy_codec_dai = {
 	.name = "dummy-codec-dai",
 	.playback = {
@@ -42,6 +107,7 @@ static struct snd_soc_dai_driver dummy_codec_dai = {
 		.rates = DUMMY_CODEC_RATES,
 		.formats = DUMMY_CODEC_FORMATS,
 	},
+	.ops = &dummy_codec_dai_ops,
 };
 
 static const struct snd_soc_component_driver soc_component_dev_dummy_codec = {
