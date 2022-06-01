@@ -80,9 +80,10 @@ static int imx_dummy_hw_params(struct snd_pcm_substream *substream,
 }
 
 static const u32 support_rates[] = {
-	11025, 22050, 44100, 48000,
-	88200, 176400, 352800,
-	705600, 1411200, 2822400,
+	8000, 11025, 12000, 16000, 22050,
+	24000, 32000, 44100, 48000, 64000,
+	88200, 96000, 176400, 192000, 352800,
+	384000, 705600, 768000, 1411200, 2822400,
 };
 
 static const u32 support_channels[] = {
