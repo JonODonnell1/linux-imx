@@ -135,6 +135,7 @@ static struct snd_soc_dai_link imx_dummy_dai = {
 
 static int imx_dummy_probe(struct platform_device *pdev)
 {
+	const char *codec_dai_name;
 	struct imx_dummy_data *priv;
 	struct device_node *cpu_np, *codec_np = NULL;
 	struct platform_device *cpu_pdev;
@@ -166,7 +167,17 @@ static int imx_dummy_probe(struct platform_device *pdev)
 		goto fail;
 	}
 
-	imx_dummy_dai.codecs->dai_name = "snd-soc-dummy-dai",
+	if (of_device_is_compatible(codec_np, "linux,snd-soc-dummy")) {
+		codec_dai_name = "snd-soc-dummy-dai";
+	} else if (of_device_is_compatible(codec_np, "linux,dummy-codec")) {
+		codec_dai_name = "dummy-codec-dai";
+	} else {
+		dev_err(&pdev->dev, "unknown Device Tree compatible\n");
+		ret = -EINVAL;
+		goto fail;
+	}
+
+	imx_dummy_dai.codecs->dai_name = codec_dai_name;
 	imx_dummy_dai.codecs->of_node = codec_np;
 	imx_dummy_dai.cpus->dai_name = dev_name(&cpu_pdev->dev);
 	imx_dummy_dai.cpus->of_node = cpu_np;
