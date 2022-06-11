@@ -152,6 +152,7 @@
 	/* mcp7940x RTC module */
 	rtc@6f {
 		compatible = "microchip,mcp7940x";
+		microchip,clock-output = <32768>;
 		reg = <0x6f>;
 		status = "okay";
 	};
