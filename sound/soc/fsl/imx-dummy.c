@@ -52,10 +52,14 @@ static int imx_dummy_hw_params(struct snd_pcm_substream *substream,
 	unsigned long freq = imx_dummy_compute_freq(substream, params);
 	int ret;
 
+	dev_dbg(cpu_dai->dev, "%s: bclk %d, channels %u, rate %u, width %d\n", __func__,
+		snd_soc_params_to_bclk(params),
+		params_channels(params), params_rate(params), params_width(params));
+
 	fmt |= SND_SOC_DAIFMT_I2S;
 
 	ret = snd_soc_dai_set_sysclk(cpu_dai, FSL_SAI_CLK_MAST1, freq,
-					SND_SOC_CLOCK_OUT);
+					SND_SOC_CLOCK_IN);
 	if (ret < 0) {
 		dev_err(dev, "failed to set cpu dai mclk1 rate(%lu): %d\n",
 			freq, ret);
@@ -213,12 +217,12 @@ static int imx_dummy_probe(struct platform_device *pdev)
 
 	ret = 0;
 fail:
-	if (cpu_np)
-		of_node_put(cpu_np);
-	if (codec_np)
-		of_node_put(codec_np);
 	if (cpu_pdev)
 		put_device(&cpu_pdev->dev);
+	if (codec_np)
+		of_node_put(codec_np);
+	if (cpu_np)
+		of_node_put(cpu_np);
 
 	return ret;
 }
