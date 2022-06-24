@@ -51,33 +51,54 @@
 		status = "okay";
 	};
 
-	dummy_dai1: dummy-dai1 {
+	dummy_codec1: dummy-codec1 {
+		#sound-dai-cells = <0>;
 		compatible = "linux,dummy-codec";
 		//compatible = "linux,snd-soc-dummy";
 		status = "okay";
 	};
 
-
-	sound-sai1 {
-		compatible = "fsl,imx-audio-dummy";
-		model = "dummy-audio-1";
-		audio-cpu = <&sai1>;
-		audio-codec = <&dummy_dai1>;
-		status = "okay";
-	};
-
-	dummy_dai2: dummy-dai2 {
+	dummy_codec2: dummy-codec2 {
+		#sound-dai-cells = <0>;
 		compatible = "linux,dummy-codec";
 		//compatible = "linux,snd-soc-dummy";
 		status = "okay";
 	};
 
-	sound-sai2 {
-		compatible = "fsl,imx-audio-dummy";
-		model = "dummy-audio-2";
-		audio-cpu = <&sai2>;
-		audio-codec = <&dummy_dai2>;
-		status = "okay";
+	sound-dummy-1 {
+		compatible = "simple-audio-card";
+		simple-audio-card,bitclock-master = <&dailink_master_1>;
+		simple-audio-card,format = "i2s";
+		simple-audio-card,frame-master = <&dailink_master_1>;
+		simple-audio-card,name = "dummy-audio-1";
+
+		simple-audio-card,codec {
+			sound-dai = <&dummy_codec1>;
+		};
+
+		dailink_master_1: simple-audio-card,cpu {
+			sound-dai = <&sai1>;
+			dai-tdm-slot-num = <2>;
+			dai-tdm-slot-width = <16>;
+		};
+	};
+
+	sound-dummy-2 {
+		compatible = "simple-audio-card";
+		simple-audio-card,bitclock-master = <&dailink_master_2>;
+		simple-audio-card,format = "i2s";
+		simple-audio-card,frame-master = <&dailink_master_2>;
+		simple-audio-card,name = "dummy-audio-2";
+
+		simple-audio-card,codec {
+			sound-dai = <&dummy_codec2>;
+		};
+
+		dailink_master_2: simple-audio-card,cpu {
+			sound-dai = <&sai2>;
+			dai-tdm-slot-num = <2>;
+			dai-tdm-slot-width = <16>;
+		};
 	};
 
 	extcon_usb1: extcon_usb1 {
@@ -537,6 +558,7 @@
 };
 
 &sai1 {
+	#sound-dai-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_sai1>;
 	assigned-clocks = <&clk IMX8MP_CLK_SAI1>;
@@ -553,12 +575,13 @@
 	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3", "pll8k", "pll11k";
 	fsl,sai-asynchronous;
 	fsl,sai-multi-lane;
-	fsl,dataline,dsd = <0 0xff 0xff>;
+	fsl,dataline = <0 0xff 0xff>;
 	dmas = <&sdma2 0 25 0>, <&sdma2 1 25 0>;
 	status = "okay";
 };
 
 &sai2 {
+	#sound-dai-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_sai2>;
 	assigned-clocks = <&clk IMX8MP_CLK_SAI2>;
