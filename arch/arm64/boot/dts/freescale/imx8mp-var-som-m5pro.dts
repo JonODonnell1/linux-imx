@@ -79,7 +79,7 @@
 		dailink_master_1: simple-audio-card,cpu {
 			sound-dai = <&sai1>;
 			dai-tdm-slot-num = <2>;
-			dai-tdm-slot-width = <16>;
+			dai-tdm-slot-width = <32>;
 		};
 	};
 
@@ -97,7 +97,7 @@
 		dailink_master_2: simple-audio-card,cpu {
 			sound-dai = <&sai2>;
 			dai-tdm-slot-num = <2>;
-			dai-tdm-slot-width = <16>;
+			dai-tdm-slot-width = <32>;
 		};
 	};
 
