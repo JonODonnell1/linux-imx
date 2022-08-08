@@ -127,8 +127,14 @@ enum ds_type {
 #define RX8130_REG_CONTROL1_CHGEN	BIT(5)
 
 #define MCP794XX_REG_CONTROL		0x07
-#	define MCP794XX_BIT_ALM0_EN	0x10
-#	define MCP794XX_BIT_ALM1_EN	0x20
+#	define MCP794XX_BIT_SQWFS0	0x01	/* Square Wave Clock Output Frequency Select bits */
+#	define MCP794XX_BIT_SQWFS1	0x02	/* 00 = 1 Hz, 01 = 4.096 kHz, 10 = 8.192 kHz, 11 = 32.768 kHz */
+#	define MCP794XX_BIT_CRSTRIM	0x01	/* Coarse Trim Mode Enable bit */
+#	define MCP794XX_BIT_EXTOSC	0x02	/* External Oscillator Input bit */
+#	define MCP794XX_BIT_ALM0_EN	0x10	/* Alarm 0 Module Enable bit */
+#	define MCP794XX_BIT_ALM1_EN	0x20	/* Alarm 1 Module Enable bit */
+#	define MCP794XX_BIT_SQW_EN	0x40	/* Square Wave Output Enable bit */
+#	define MCP794XX_BIT_OUT	0x80	/* Logic Level for General Purpose Output bit */
 #define MCP794XX_REG_ALARM0_BASE	0x0a
 #define MCP794XX_REG_ALARM0_CTRL	0x0d
 #define MCP794XX_REG_ALARM1_BASE	0x11
@@ -1953,6 +1959,37 @@ static int ds1307_probe(struct i2c_client *client,
 		if (tmp & DS1388_BIT_nEOSC) {
 			tmp &= ~DS1388_BIT_nEOSC;
 			regmap_write(ds1307->regmap, DS1388_REG_CONTROL, tmp);
+		}
+		break;
+	case mcp794xx:
+		if (!of_property_read_u32(client->dev.of_node, "microchip,clock-output", &tmp)) {
+			u8 reg = MCP794XX_BIT_SQW_EN;
+			switch (tmp) {
+			case 1:
+				break;
+			case 4096:
+				reg |= MCP794XX_BIT_SQWFS0;
+				break;
+			case 8192:
+				reg |= MCP794XX_BIT_SQWFS1;
+				break;
+			case 32768:
+				reg |= MCP794XX_BIT_SQWFS0 | MCP794XX_BIT_SQWFS1;
+				break;
+			default:
+				reg = 0;
+				break;
+			}
+			if (reg) {
+				regmap_write(ds1307->regmap, MCP794XX_REG_CONTROL, reg | MCP794XX_BIT_SQW_EN);
+				clear_bit(HAS_ALARM, &ds1307->flags);
+				dev_warn(ds1307->dev, "enabled microchip,clock-output %d: alarms disabled\n", tmp);
+			} else {
+				dev_warn(ds1307->dev, "invalid microchip,clock-output %d\n", tmp);
+				regmap_write(ds1307->regmap, MCP794XX_REG_CONTROL, MCP794XX_BIT_OUT);
+			}
+		} else {
+			regmap_write(ds1307->regmap, MCP794XX_REG_CONTROL, MCP794XX_BIT_OUT);
 		}
 		break;
 	default:
