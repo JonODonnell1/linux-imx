@@ -198,7 +198,8 @@
 	icn6211@2c {
 		compatible = "chipone,icn6211";
 		reg = <0x2c>;
-		enable-gpios = <&gpio5 5 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
+		enable-gpios = <&gpio5 27 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
+		pinctrl-0 = <&pinctrl_icn6211>;
 		status = "okay";
 		ports {
 			#address-cells = <1>;
@@ -612,12 +613,12 @@
 		"",                      // 007 GPIO1_IO07
 		"",                      // 008 GPIO1_IO08
 		"",                      // 009 GPIO1_IO09
-		"eqos_reset",            // 010 GPIO1_IO10
+		"EQOS_RESET",            // 010 GPIO1_IO10
 		"factory_n",             // 011 GPIO1_IO11 (pin 69)
 		"",                      // 012 GPIO1_IO12
 		"",                      // 013 GPIO1_IO13
 		"USDHC2_CD",             // 014 GPIO1_IO14 (pin 80)
-		"sdreset_n",             // 015 GPIO1_IO15 (pin 29)
+		"SDRESET_N",             // 015 GPIO1_IO15 (pin 29)
 		"ENET_MDC",              // 016 GPIO1_IO16 (pin 74)
 		"ENET_MDIO" ,            // 017 GPIO1_IO17 (pin 30)
 		"ENET_TD3",              // 018 GPIO1_IO18
@@ -657,7 +658,7 @@
 		"USDHC2_D2",             // 049 GPIO2_IO17 (pin 61)
 		"USDHC2_D3",             // 050 GPIO2_IO18 (pin 65)
 		"",                      // 051 GPIO2_IO19
-		"reg_eqos",              // 052 GPIO2_IO20
+		"REG_EQOS",              // 052 GPIO2_IO20
 		"",                      // 053 GPIO2_IO21
 		"",                      // 054 GPIO2_IO22
 		"",                      // 055 GPIO2_IO23
@@ -745,15 +746,15 @@
 		"trigout1",              // 128 GPIO5_IO00 (pin 200)
 		"trigout2",              // 129 GPIO5_IO01 (pin 18)
 		"trigout3",              // 130 GPIO5_IO02 (pin 20)
-		"ctpint",                // 131 GPIO5_IO03 (pin 68)
-		"pmic_int",              // 132 GPIO5_IO04
-		"ctpwake",               // 133 GPIO5_IO05 (pin 17)
+		"CTPINT",                // 131 GPIO5_IO03 (pin 68)
+		"PMIC_INT",              // 132 GPIO5_IO04
+		"CTPWAKE",               // 133 GPIO5_IO05 (pin 17)
 		"hwid0",                 // 134 GPIO5_IO06 (pin 53)
 		"hwid1",                 // 135 GPIO5_IO07 (pin 52)
 		"hwid2",                 // 136 GPIO5_IO08 (pin 50)
 		"hwid3",                 // 137 GPIO5_IO09 (pin 51)
 		"swoff",                 // 138 GPIO5_IO10 (pin 43)
-		"pcierst_n",             // 139 GPIO5_IO11 (pin 45)
+		"PCIERST_N",             // 139 GPIO5_IO11 (pin 45)
 		"bootcompl",             // 140 GPIO5_IO12 (pin 41)
 		"pwrled",                // 141 GPIO5_IO13 (pin 39)
 		"I2C1_SCL",              // 142 GPIO5_IO14 (pin 189)
@@ -769,7 +770,7 @@
 		"UART2_RX",              // 152 GPIO5_IO24 (pin 83)
 		"UART2_TX",              // 153 GPIO5_IO25 (pin 85)
 		"pwroff",                // 154 GPIO5_IO26 (pin 44)
-		"",                      // 155 GPIO5_IO27 (pin 46)
+		"ICN6211_EN",            // 155 GPIO5_IO27 (pin 46)
 		"trigout4",              // 156 GPIO5_IO28 (pin 115)
 		"trigout5",              // 157 GPIO5_IO29 (pin 171)
 		"",                      // 158 GPIO5_IO30
@@ -922,4 +923,11 @@
 			MX8MP_IOMUXC_GPIO1_IO05__GPIO1_IO05				0x10
 		>;
 	};
+
+	pinctrl_icn6211: icn6211grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_UART3_TXD__GPIO5_IO27          		0x01
+		>;
+	};
+
 };
