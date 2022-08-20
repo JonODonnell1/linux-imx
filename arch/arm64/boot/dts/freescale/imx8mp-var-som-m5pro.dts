@@ -608,7 +608,7 @@
 		"WDOG_B",                // 002 GPIO1_IO02
 		"",                      // 003 GPIO1_IO03
 		"",                      // 004 GPIO1_IO04
-		"",                      // 005 GPIO1_IO05
+		"ID",                    // 005 GPIO1_IO05
 		"",                      // 006 GPIO1_IO06
 		"",                      // 007 GPIO1_IO07
 		"",                      // 008 GPIO1_IO08
@@ -644,13 +644,13 @@
 		"",                      // 035 GPIO2_IO03
 		"",                      // 036 GPIO2_IO04
 		"",                      // 037 GPIO2_IO05
-		"",                      // 038 GPIO2_IO06
-		"",                      // 039 GPIO2_IO07
+		"I2C1_SCL",              // 038 GPIO2_IO06
+		"I2C1_SDA",              // 039 GPIO2_IO07
 		"",                      // 040 GPIO2_IO08
 		"",                      // 041 GPIO2_IO09
 		"",                      // 042 GPIO2_IO10
 		"",                      // 043 GPIO2_IO11
-		"",                      // 044 GPIO2_IO12
+		"VSD_SEL",               // 044 GPIO2_IO12
 		"USDHC2_CLK",            // 045 GPIO2_IO13 (pin 60)
 		"USDHC2_CMD",            // 046 GPIO2_IO14 (pin 64)
 		"USDHC2_D0",             // 047 GPIO2_IO15 (pin 62)
@@ -730,7 +730,7 @@
 		"",                      // 115 GPIO4_IO19 (pin 173)
 		"SAI1_MCLK",             // 116 GPIO4_IO20 (pin 40)
 		"",                      // 117 GPIO4_IO21 (pin 23)
-		"",                      // 118 GPIO4_IO22 (pin 22)
+		"USDHC2_VMMC",           // 118 GPIO4_IO22 (pin 22)
 		"",                      // 119 GPIO4_IO23 (pin 21)
 		"SAI2_TX_SYNC",          // 120 GPIO4_IO24 (pin 24)
 		"SAI2_TX_BCLK",          // 121 GPIO4_IO25 (pin 25)
@@ -757,8 +757,8 @@
 		"PCIERST_N",             // 139 GPIO5_IO11 (pin 45)
 		"bootcompl",             // 140 GPIO5_IO12 (pin 41)
 		"pwrled",                // 141 GPIO5_IO13 (pin 39)
-		"I2C1_SCL",              // 142 GPIO5_IO14 (pin 189)
-		"I2C1_SDA",              // 143 GPIO5_IO15 (pin 187)
+		"",                      // 142 GPIO5_IO14 (pin 189)
+		"",                      // 143 GPIO5_IO15 (pin 187)
 		"I2C2_SCL",              // 144 GPIO5_IO16 (pin 193)
 		"I2C2_SDA",              // 145 GPIO5_IO17 (pin 191)
 		"",                      // 146 GPIO5_IO18 (pin 88)
