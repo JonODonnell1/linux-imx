@@ -133,6 +133,25 @@
 //			pixelclk-active = <1>;
 //		};
 //	};
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm1 0 1000000>;
+		status = "okay";
+
+		brightness-levels = < 0  1  2  3  4  5  6  7  8  9
+				     10 11 12 13 14 15 16 17 18 19
+				     20 21 22 23 24 25 26 27 28 29
+				     30 31 32 33 34 35 36 37 38 39
+				     40 41 42 43 44 45 46 47 48 49
+				     50 51 52 53 54 55 56 57 58 59
+				     60 61 62 63 64 65 66 67 68 69
+				     70 71 72 73 74 75 76 77 78 79
+				     80 81 82 83 84 85 86 87 88 89
+				     90 91 92 93 94 95 96 97 98 99
+				    100>;
+		default-brightness-level = <80>;
+	};
 };
 
 &aud2htx {
@@ -186,7 +205,7 @@
 		pinctrl-0 = <&pinctrl_ctp>;
 		interrupt-parent = <&gpio5>;
 		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
-		wake-gpios = <&gpio5 5 GPIO_ACTIVE_HIGH>;
+		wake-gpios = <&gpio5 18 GPIO_ACTIVE_HIGH>;
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
 		touchscreen-inverted-x;
@@ -198,7 +217,7 @@
 //	icn6211@2c {
 //		compatible = "chipone,icn6211";
 //		reg = <0x2c>;
-//		enable-gpios = <&gpio5 27 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
+//		enable-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
 //		pinctrl-0 = <&pinctrl_icn6211>;
 //		status = "okay";
 //		ports {
@@ -601,6 +620,13 @@
 	status = "okay";
 };
 
+&pwm1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm1>;
+	status = "okay";
+};
+
+
 &gpio1 {
 	gpio-line-names = 
 		"",                      // 000 GPIO1_IO00
@@ -748,7 +774,7 @@
 		"trigout3",              // 130 GPIO5_IO02 (pin 20)
 		"CTPINT",                // 131 GPIO5_IO03 (pin 68)
 		"PMIC_INT",              // 132 GPIO5_IO04
-		"CTPWAKE",               // 133 GPIO5_IO05 (pin 17)
+		"BL_PWM",                // 133 GPIO5_IO05 (pin 17)
 		"hwid0",                 // 134 GPIO5_IO06 (pin 53)
 		"hwid1",                 // 135 GPIO5_IO07 (pin 52)
 		"hwid2",                 // 136 GPIO5_IO08 (pin 50)
@@ -761,8 +787,8 @@
 		"",                      // 143 GPIO5_IO15 (pin 187)
 		"I2C2_SCL",              // 144 GPIO5_IO16 (pin 193)
 		"I2C2_SDA",              // 145 GPIO5_IO17 (pin 191)
-		"",                      // 146 GPIO5_IO18 (pin 88)
-		"",                      // 147 GPIO5_IO19 (pin 87)
+		"CTPWAKE",               // 146 GPIO5_IO18 (pin 88)
+		"ICN6211_EN",            // 147 GPIO5_IO19 (pin 87)
 		"I2C4_SCL",              // 148 GPIO5_IO20 (pin 92)
 		"I2C4_SDA",              // 149 GPIO5_IO21 (pin 90)
 		"hwrev0",                // 150 GPIO5_IO22 (pin 175)
@@ -770,7 +796,7 @@
 		"UART2_RX",              // 152 GPIO5_IO24 (pin 83)
 		"UART2_TX",              // 153 GPIO5_IO25 (pin 85)
 		"pwroff",                // 154 GPIO5_IO26 (pin 44)
-		"ICN6211_EN",            // 155 GPIO5_IO27 (pin 46)
+		"",            // 155 GPIO5_IO27 (pin 46)
 		"trigout4",              // 156 GPIO5_IO28 (pin 115)
 		"trigout5",              // 157 GPIO5_IO29 (pin 171)
 		"",                      // 158 GPIO5_IO30
@@ -881,7 +907,7 @@
 	pinctrl_ctp: ctpgrp {
 		fsl,pins = <
 			MX8MP_IOMUXC_SPDIF_TX__GPIO5_IO03 					0x16
-			MX8MP_IOMUXC_SPDIF_EXT_CLK__GPIO5_IO05          	0x01
+			MX8MP_IOMUXC_I2C3_SCL__GPIO5_IO18					0x01
 		>;
 	};
 
@@ -926,8 +952,13 @@
 
 //	pinctrl_icn6211: icn6211grp {
 //		fsl,pins = <
-//			MX8MP_IOMUXC_UART3_TXD__GPIO5_IO27          		0x01
+//			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x01
 //		>;
 //	};
 
+	pinctrl_pwm1: pwm1grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_SPDIF_EXT_CLK__PWM1_OUT				0x116
+		>;
+	};
 };
