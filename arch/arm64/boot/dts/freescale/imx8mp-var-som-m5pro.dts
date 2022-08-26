@@ -795,8 +795,8 @@
 		"hwrev1",                // 151 GPIO5_IO23 (pin 124)
 		"UART2_RX",              // 152 GPIO5_IO24 (pin 83)
 		"UART2_TX",              // 153 GPIO5_IO25 (pin 85)
-		"pwroff",                // 154 GPIO5_IO26 (pin 44)
-		"",            // 155 GPIO5_IO27 (pin 46)
+		"",                      // 154 GPIO5_IO26 (pin 44)
+		"",                      // 155 GPIO5_IO27 (pin 46)
 		"trigout4",              // 156 GPIO5_IO28 (pin 115)
 		"trigout5",              // 157 GPIO5_IO29 (pin 171)
 		"",                      // 158 GPIO5_IO30
