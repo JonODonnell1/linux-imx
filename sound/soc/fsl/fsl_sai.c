@@ -509,7 +509,8 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 		}
 	}
 
-	if (sai->soc_data->max_register >= FSL_SAI_MCTL) {
+	if ((sai->soc_data->max_register >= FSL_SAI_MCTL) &&
+	    sai->mclk_direction_output) {
 		/* SAI is in master mode at this point, so enable MCLK */
 		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
 				FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
@@ -1475,6 +1476,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
 	/* Select MCLK direction */
 	if (of_find_property(np, "fsl,sai-mclk-direction-output", NULL) &&
 	    sai->soc_data->max_register >= FSL_SAI_MCTL) {
+		sai->mclk_direction_output = true;
 		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
 				   FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
 	}
