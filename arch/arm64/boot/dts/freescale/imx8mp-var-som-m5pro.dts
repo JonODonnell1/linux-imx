@@ -109,30 +109,30 @@
 		status = "okay";
 	};
 
-//	parallel_panel {
-//		compatible = "panel-dpi";
-//		port {
-//			panel_out_bridge: endpoint {
-//				remote-endpoint = <&bridge_out_panel>;
-//			};
-//		};
-//		panel-timing {
-//			clock-frequency = <31250000>;
-//			hactive = <800>;
-//			vactive = <480>;
-//			hfront-porch = <40>;
-//			hback-porch = <86>;
-//			hsync-len = <1>;
-//			vback-porch = <30>;
-//			vfront-porch = <13>;
-//			vsync-len = <3>;
-//
-//			hsync-active = <0>;
-//			vsync-active = <0>;
-//			de-active = <1>;
-//			pixelclk-active = <1>;
-//		};
-//	};
+	parallel_panel {
+		compatible = "panel-dpi";
+		port {
+			panel_out_bridge: endpoint {
+				remote-endpoint = <&bridge_out_panel>;
+			};
+		};
+		panel-timing {
+			clock-frequency = <31250000>;
+			hactive = <800>;
+			vactive = <480>;
+			hfront-porch = <40>;
+			hback-porch = <86>;
+			hsync-len = <1>;
+			vback-porch = <30>;
+			vfront-porch = <13>;
+			vsync-len = <3>;
+
+			hsync-active = <0>;
+			vsync-active = <0>;
+			de-active = <1>;
+			pixelclk-active = <1>;
+		};
+	};
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
@@ -170,16 +170,16 @@
 	};
 };
 
-//&mipi_dsi {
-//		status = "okay";
-//
-//		port@1 {
-//			dsi_out_bridge: endpoint {
-//			remote-endpoint = <&bridge_in_dsi>;
-//			attach-bridge;
-//		};
-//	};
-//};
+&mipi_dsi {
+		status = "okay";
+
+		port@1 {
+			dsi_out_bridge: endpoint {
+			remote-endpoint = <&bridge_in_dsi>;
+			attach-bridge;
+		};
+	};
+};
 
 &i2c4 {
 	clock-frequency = <400000>;
@@ -214,29 +214,29 @@
 		status = "okay";
 	};
 
-//	icn6211@2c {
-//		compatible = "chipone,icn6211";
-//		reg = <0x2c>;
-//		enable-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
-//		pinctrl-0 = <&pinctrl_icn6211>;
-//		status = "okay";
-//		ports {
-//			#address-cells = <1>;
-//			#size-cells = <0>;
-//			port@0 {
-//				reg = <0>;
-//				bridge_in_dsi: endpoint {
-//					remote-endpoint = <&dsi_out_bridge>;
-//				};
-//			};
-//			port@1 {
-//				reg = <1>;
-//				bridge_out_panel: endpoint {
-//					remote-endpoint = <&panel_out_bridge>;
-//				};
-//			};
-//		};
-//	};
+	icn6211@2c {
+		compatible = "chipone,icn6211";
+		reg = <0x2c>;
+		enable-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
+		pinctrl-0 = <&pinctrl_icn6211>;
+		status = "okay";
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				bridge_in_dsi: endpoint {
+					remote-endpoint = <&dsi_out_bridge>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				bridge_out_panel: endpoint {
+					remote-endpoint = <&panel_out_bridge>;
+				};
+			};
+		};
+	};
 
 	pi6cfgl601b@69 {
 		compatible = "dummy";
@@ -947,11 +947,11 @@
 		>;
 	};
 
-//	pinctrl_icn6211: icn6211grp {
-//		fsl,pins = <
-//			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x01
-//		>;
-//	};
+	pinctrl_icn6211: icn6211grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x01
+		>;
+	};
 
 	pinctrl_pwm1: pwm1grp {
 		fsl,pins = <
