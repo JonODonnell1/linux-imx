@@ -467,6 +467,11 @@
 	status = "okay";
 };
 
+/* LVDS */
+&lcdif2 {
+	status = "disabled";
+};
+
 /* HDMI */
 &lcdif3 {
 	status = "okay";
