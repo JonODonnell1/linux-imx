@@ -259,6 +259,15 @@
 		status = "okay";
 	};
 
+	eeprom@50 {
+		compatible = "st,24c02";
+		reg = <0x50>;
+		pagesize = <16>;
+		// read-only;
+		size = <256>;
+		status = "okay";
+	};
+
 	mux@71 {
 		compatible = "nxp,pca9548";
 		reg = <0x71>;
