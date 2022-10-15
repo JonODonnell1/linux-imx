@@ -235,6 +235,7 @@
 			port@0 {
 				reg = <0>;
 				bridge_in_dsi: endpoint {
+					data-lanes = <0>;
 					remote-endpoint = <&dsi_out_bridge>;
 				};
 			};
