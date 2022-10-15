@@ -204,7 +204,7 @@
 		status = "okay";
 	};
 
-//	/* Capacitive touch controller */
+	/* Capacitive touch controller */
 	ctp: ctp@38 {
 		compatible = "edt,edt-ft5206";
 		reg = <0x38>;
@@ -213,10 +213,8 @@
 		interrupt-parent = <&gpio5>;
 		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
 		wake-gpios = <&gpio5 18 GPIO_ACTIVE_HIGH>;
-		touchscreen-size-x = <800>;
-		touchscreen-size-y = <480>;
-		touchscreen-inverted-x;
-		touchscreen-inverted-y;
+		touchscreen-size-x = <480>;
+		touchscreen-size-y = <272>;
 		wakeup-source;
 		status = "okay";
 	};
