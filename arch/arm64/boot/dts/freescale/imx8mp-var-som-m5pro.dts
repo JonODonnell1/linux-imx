@@ -171,10 +171,10 @@
 };
 
 &mipi_dsi {
-		status = "okay";
+	status = "okay";
 
-		port@1 {
-			dsi_out_bridge: endpoint {
+	port@1 {
+		dsi_out_bridge: endpoint {
 			remote-endpoint = <&bridge_in_dsi>;
 			attach-bridge;
 		};
