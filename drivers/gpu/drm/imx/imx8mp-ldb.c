@@ -194,6 +194,7 @@ imx8mp_ldb_encoder_atomic_check(struct drm_encoder *encoder,
 		return -EINVAL;
 	}
 
+#if 0
 	/*
 	 * Due to limited video PLL frequency points on i.MX8mp,
 	 * we do mode fixup here in case any mode is unsupported.
@@ -202,6 +203,7 @@ imx8mp_ldb_encoder_atomic_check(struct drm_encoder *encoder,
 		mode->clock = mode->clock > 100000 ? 148500 : 74250;
 	else
 		mode->clock = 74250;
+#endif
 
 	return 0;
 }
@@ -220,6 +222,7 @@ imx8mp_ldb_encoder_mode_valid(struct drm_encoder *encoder,
 	if (ldb_ch->panel)
 		return MODE_OK;
 
+#if 0
 	/*
 	 * Due to limited video PLL frequency points on i.MX8mp,
 	 * we do mode valid check here.
@@ -229,6 +232,7 @@ imx8mp_ldb_encoder_mode_valid(struct drm_encoder *encoder,
 
 	if (!ldb->dual && mode->clock != 74250)
 		return MODE_NOCLOCK;
+#endif
 
 	return MODE_OK;
 }
