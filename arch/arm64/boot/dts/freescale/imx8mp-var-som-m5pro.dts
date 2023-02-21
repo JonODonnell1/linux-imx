@@ -116,14 +116,16 @@
 	};
 
 	parallel_panel {
-		compatible = "panel-dpi";
-		port {
-			panel_out_bridge: endpoint {
-				remote-endpoint = <&bridge_out_panel>;
-			};
-		};
+		compatible = "sgd,gktw70sdae4se", "panel-lvds";
+		backlight = <&backlight>;
+		width-mm = <95>;
+		height-mm = <25>;
+		label = "gktw70sdae4se";
+		data-mapping = "jeida-24";
+		status = "okay";
+
 		panel-timing {
-			clock-frequency = <9000000>;
+			clock-frequency = <8735295>;
 			hactive = <480>;
 			hback-porch = <43>;
 			hfront-porch = <8>;
@@ -137,6 +139,12 @@
 			vsync-active = <0>;
 			de-active = <1>;
 			pixelclk-active = <1>;
+		};
+
+		port {
+			panel_in: endpoint {
+				remote-endpoint = <&lvds_out>;
+			};
 		};
 	};
 
@@ -158,13 +166,6 @@
 				    100>;
 		default-brightness-level = <80>;
 	};
-
-	icn6211_osc: icn6211_osc {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <26000000>;
-		clock-output-names = "icn6211_osc";
-	};
 };
 
 &aud2htx {
@@ -179,17 +180,6 @@
 			at803x,eee-disabled;
 			at803x,vddio-1p8v;
 			eee-broken-1000t;
-		};
-	};
-};
-
-&mipi_dsi {
-	status = "okay";
-
-	port@1 {
-		dsi_out_bridge: endpoint {
-			remote-endpoint = <&bridge_in_dsi>;
-			attach-bridge;
 		};
 	};
 };
@@ -223,33 +213,6 @@
 		touchscreen-size-y = <272>;
 		wakeup-source;
 		status = "okay";
-	};
-
-	icn6211@2c {
-		compatible = "chipone,icn6211";
-		reg = <0x2c>;
-		clocks = <&icn6211_osc>;
-		clock-names = "refclk";
-		enable-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>; /* LCD-RST: icn6211 pin 11 */
-		pinctrl-0 = <&pinctrl_icn6211>;
-		status = "okay";
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			port@0 {
-				reg = <0>;
-				bridge_in_dsi: endpoint {
-					data-lanes = <0>;
-					remote-endpoint = <&dsi_out_bridge>;
-				};
-			};
-			port@1 {
-				reg = <1>;
-				bridge_out_panel: endpoint {
-					remote-endpoint = <&panel_out_bridge>;
-				};
-			};
-		};
 	};
 
 	pi6cfgl601b@69 {
@@ -487,12 +450,12 @@
 
 /* MIPI-DSI */
 &lcdif1 {
-	status = "okay";
+	status = "disabled";
 };
 
 /* LVDS */
 &lcdif2 {
-	status = "disabled";
+	status = "okay";
 };
 
 /* HDMI */
@@ -502,8 +465,30 @@
 	thres-high = <3 4>;	/* (FIFO * 3 / 4) */
 };
 
-&mipi_dsi {
+&ldb {
 	status = "okay";
+
+	lvds-channel@0 {
+		fsl,data-mapping = "jeida";
+		fsl,data-width = <24>;
+		status = "okay";
+
+		port@1 {
+			reg = <1>;
+
+			lvds_out: endpoint {
+				remote-endpoint = <&panel_in>;
+			};
+		};
+	};
+};
+
+&ldb_phy {
+	status = "okay";
+};
+
+&mipi_dsi {
+	status = "disabled";
 };
 
 &pcie {
