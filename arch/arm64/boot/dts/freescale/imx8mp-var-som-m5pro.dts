@@ -634,6 +634,8 @@
 };
 
 &xcvr {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_xcvr>;
 	#sound-dai-cells = <0>;
 	status = "okay";
 };
@@ -758,10 +760,10 @@
 		"SAI1_RX_D01",           // 099 GPIO4_IO03 (pin 117)
 		"SAI1_RX_D02",           // 100 GPIO4_IO04 (pin 72)
 		"SAI1_RX_D03",           // 101 GPIO4_IO05 (pin 75)
-		"",                      // 102 GPIO4_IO06 (pin 122)
-		"",                      // 103 GPIO4_IO07 (pin 81)
-		"",                      // 104 GPIO4_IO08 (pin 71)
-		"",                      // 105 GPIO4_IO09 (pin 54)
+		"clkselo1",              // 102 GPIO4_IO06 (pin 122)
+		"clkselo2",              // 103 GPIO4_IO07 (pin 81)
+		"clkselo3",              // 104 GPIO4_IO08 (pin 71)
+		"clkselo4",              // 105 GPIO4_IO09 (pin 54)
 		"SAI1_TX_SYNC",          // 106 GPIO4_IO10 (pin 120)
 		"SAI1_TX_BCLK",          // 107 GPIO4_IO11 (pin 57)
 		"SAI1_TX_D00",           // 108 GPIO4_IO12 (pin 73)
@@ -769,7 +771,7 @@
 		"SAI1_TX_D02",           // 110 GPIO4_IO14 (pin 56)
 		"SAI1_TX_D03",           // 111 GPIO4_IO15 (pin 55)
 		"SAI1_TX_D04",           // 112 GPIO4_IO16 (pin 113)
-		"",                      // 113 GPIO4_IO17 (pin 96)
+		"clkselo5",              // 113 GPIO4_IO17 (pin 96)
 		"",                      // 114 GPIO4_IO18 (pin 77)
 		"",                      // 115 GPIO4_IO19 (pin 173)
 		"SAI1_MCLK",             // 116 GPIO4_IO20 (pin 40)
@@ -956,6 +958,14 @@
 			MX8MP_IOMUXC_SAI2_TXFS__AUDIOMIX_SAI2_TX_SYNC		0xd6
 			MX8MP_IOMUXC_SAI2_TXC__AUDIOMIX_SAI2_TX_BCLK		0xd6
 			MX8MP_IOMUXC_SAI2_TXD0__AUDIOMIX_SAI2_TX_DATA00		0xd6
+		>;
+	};
+
+	pinctrl_xcvr: xcvrgrp {
+		fsl,pins = <
+			MX8MP_IOMUXC_SPDIF_EXT_CLK__AUDIOMIX_SPDIF1_EXT_CLK	0xd6
+			MX8MP_IOMUXC_SPDIF_RX__AUDIOMIX_SPDIF1_IN	0xd6
+			MX8MP_IOMUXC_SPDIF_TX__AUDIOMIX_SPDIF1_OUT	0xd6
 		>;
 	};
 
