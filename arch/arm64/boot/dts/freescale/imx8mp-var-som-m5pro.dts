@@ -119,7 +119,7 @@
 		compatible = "sgd,gktw70sdae4se", "panel-lvds";
 		backlight = <&backlight>;
 		width-mm = <95>;
-		height-mm = <25>;
+		height-mm = <50>;
 		label = "gktw70sdae4se";
 		data-mapping = "vesa-24";  // jeida-24, jeida-18, vesa-24 (jeida-24 worked with proto PCB)
 		status = "okay";
@@ -209,7 +209,9 @@
 		interrupt-parent = <&gpio5>;
 		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
 		wake-gpios = <&gpio5 18 GPIO_ACTIVE_HIGH>;
+		touchscreen-min-x = <0>;
 		touchscreen-size-x = <480>;
+		touchscreen-min-y = <0>;
 		touchscreen-size-y = <272>;
 		wakeup-source;
 		status = "okay";
