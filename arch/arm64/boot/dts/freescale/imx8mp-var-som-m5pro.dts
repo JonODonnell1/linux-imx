@@ -638,7 +638,7 @@
 
 &xcvr {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_xcvr>;
+//	pinctrl-0 = <&pinctrl_xcvr>;
 	#sound-dai-cells = <0>;
 	status = "okay";
 };
@@ -964,13 +964,13 @@
 		>;
 	};
 
-	pinctrl_xcvr: xcvrgrp {
-		fsl,pins = <
-			MX8MP_IOMUXC_SPDIF_EXT_CLK__AUDIOMIX_SPDIF1_EXT_CLK	0xd6
-			MX8MP_IOMUXC_SPDIF_RX__AUDIOMIX_SPDIF1_IN	0xd6
-			MX8MP_IOMUXC_SPDIF_TX__AUDIOMIX_SPDIF1_OUT	0xd6
-		>;
-	};
+//	pinctrl_xcvr: xcvrgrp {
+//		fsl,pins = <
+//			MX8MP_IOMUXC_SPDIF_EXT_CLK__AUDIOMIX_SPDIF1_EXT_CLK	0xd6
+//			MX8MP_IOMUXC_SPDIF_RX__AUDIOMIX_SPDIF1_IN	0xd6
+//			MX8MP_IOMUXC_SPDIF_TX__AUDIOMIX_SPDIF1_OUT	0xd6
+//		>;
+//	};
 
 	pinctrl_extcon: extcongrp {
 		fsl,pins = <
