@@ -106,6 +106,16 @@
 		model = "imx-audio-xcvr";
 		cpu-dai = <&xcvr>;
 	};
+//	sound-xcvr {
+//		compatible = "fsl,imx-audio-card";
+//		model = "imx-audio-xcvr";
+//		pri-dai-link {
+//			link-name = "XCVR PCM";
+//			cpu {
+//				sound-dai = <&xcvr>;
+//			};
+//		};
+//	};
 
 	extcon_usb1: extcon_usb1 {
 		compatible = "linux,extcon-usb-gpio";
@@ -637,8 +647,6 @@
 };
 
 &xcvr {
-	pinctrl-names = "default";
-//	pinctrl-0 = <&pinctrl_xcvr>;
 	#sound-dai-cells = <0>;
 	status = "okay";
 };
@@ -832,10 +840,10 @@
 
 	pinctrl_hog: hoggrp {
 		fsl,pins = <
-			MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL			0x400001c2
-			MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA			0x400001c2
-			MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD				0x40000010
-			MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC				0x40000010
+			MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL			0x400001c3
+			MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA			0x400001c3
+			MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD				0x40000019
+			MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC				0x40000019
 
 
 			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11					0x00
@@ -963,14 +971,6 @@
 			MX8MP_IOMUXC_SAI2_TXD0__AUDIOMIX_SAI2_TX_DATA00		0xd6
 		>;
 	};
-
-//	pinctrl_xcvr: xcvrgrp {
-//		fsl,pins = <
-//			MX8MP_IOMUXC_SPDIF_EXT_CLK__AUDIOMIX_SPDIF1_EXT_CLK	0xd6
-//			MX8MP_IOMUXC_SPDIF_RX__AUDIOMIX_SPDIF1_IN	0xd6
-//			MX8MP_IOMUXC_SPDIF_TX__AUDIOMIX_SPDIF1_OUT	0xd6
-//		>;
-//	};
 
 	pinctrl_extcon: extcongrp {
 		fsl,pins = <
