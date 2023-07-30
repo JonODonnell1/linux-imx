@@ -232,6 +232,9 @@ imx8mp_hdmi_mode_valid(struct dw_hdmi *hdmi, void *data,
 			mode->flags & DRM_MODE_FLAG_INTERLACE)
 		return MODE_BAD;
 
+	if (mode->hdisplay > 1920 || mode->vdisplay > 1080)
+		return MODE_BAD_HVALUE;
+
 	return MODE_OK;
 }
 
