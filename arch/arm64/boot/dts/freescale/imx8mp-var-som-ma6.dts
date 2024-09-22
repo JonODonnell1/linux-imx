@@ -8,7 +8,7 @@
  #include "imx8mp-var-som-ec_dsi_sai1.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-MX8M-PLUS-EC_DSI_SAI1 on M5Pro";
+	model = "Variscite VAR-SOM-MX8M-PLUS-EC_DSI_SAI1 on MA6";
 
 	chosen {
 		stdout-path = &uart2;
