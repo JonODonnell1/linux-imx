@@ -16,10 +16,12 @@
 
 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
 		compatible = "regulator-fixed";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_reg_usdhc2_vmmc>;
 		regulator-name = "VSD_3V3";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
-		gpio = <&gpio4 22 GPIO_ACTIVE_HIGH>;
+		gpio = <&gpio2 19 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 		startup-delay-us = <100>;
 		off-on-delay-us = <12000>;
@@ -36,32 +38,9 @@
 			  1800000 1>;
 	};
 
-	sound_hdmi: sound_hdmi {
-		compatible = "fsl,imx-audio-cdnhdmi";
-		model = "audio-hdmi";
-		audio-cpu = <&aud2htx>;
-		hdmi-out;
-		constraint-rate = <44100>,
-				<88200>,
-				<176400>,
-				<32000>,
-				<48000>,
-				<96000>,
-				<192000>;
-		status = "okay";
-	};
-
 	dummy_codec1: dummy-codec1 {
 		#sound-dai-cells = <0>;
 		compatible = "linux,dummy-codec";
-		//compatible = "linux,snd-soc-dummy";
-		status = "okay";
-	};
-
-	dummy_codec2: dummy-codec2 {
-		#sound-dai-cells = <0>;
-		compatible = "linux,dummy-codec";
-		//compatible = "linux,snd-soc-dummy";
 		status = "okay";
 	};
 
@@ -82,40 +61,6 @@
 			dai-tdm-slot-width = <32>;
 		};
 	};
-
-	sound-dummy-2 {
-		compatible = "simple-audio-card";
-		simple-audio-card,bitclock-master = <&dailink_master_2>;
-		simple-audio-card,format = "i2s";
-		simple-audio-card,frame-master = <&dailink_master_2>;
-		simple-audio-card,name = "dummy-audio-2";
-
-		simple-audio-card,codec {
-			sound-dai = <&dummy_codec2>;
-		};
-
-		dailink_master_2: simple-audio-card,cpu {
-			sound-dai = <&sai2>;
-			dai-tdm-slot-num = <2>;
-			dai-tdm-slot-width = <32>;
-		};
-	};
-
-	sound-xcvr {
-		compatible = "fsl,imx-audio-xcvr";
-		model = "imx-audio-xcvr";
-		cpu-dai = <&xcvr>;
-	};
-//	sound-xcvr {
-//		compatible = "fsl,imx-audio-card";
-//		model = "imx-audio-xcvr";
-//		pri-dai-link {
-//			link-name = "XCVR PCM";
-//			cpu {
-//				sound-dai = <&xcvr>;
-//			};
-//		};
-//	};
 
 	extcon_usb1: extcon_usb1 {
 		compatible = "linux,extcon-usb-gpio";
@@ -227,6 +172,16 @@
 		status = "okay";
 	};
 
+	trigout: trigout@20 {
+		compatible = "nxp,pca9534";
+		reg = <0x20>;
+		gpio-controller;
+		pinctrl-names = "default";
+		#gpio-cells = <2>;
+		gpio-line-names = "trigout1", "trigout2", "trigout3", "trigout4", "trigout5", "trigout6", "trigout7", "trigout8";
+		status = "okay";
+	};
+
 	pi6cfgl601b@69 {
 		compatible = "dummy";
 		reg = <0x69>;
@@ -257,6 +212,33 @@
 		status = "okay";
 	};
 
+	adc@49 {
+		compatible = "ti,ads1015";  // TLS2024 is compatible (enough) with ads1015
+		reg = <0x49>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		channel@0 {
+			reg = <4>;      // AIN0-GND
+			gain = <2>;     // 2.048V (default)
+			datarate = <4>; // 1600Hz (default)
+		};
+		channel@1 {
+			reg = <5>;      // AIN1-GND
+			gain = <2>;     // 2.048V (default)
+			datarate = <4>; // 1600Hz (default)
+		};
+		channel@2 {
+			reg = <6>;      // AIN2-GND
+			gain = <2>;     // 2.048V (default)
+			datarate = <4>; // 1600Hz (default)
+		};
+		channel@3 {
+			reg = <7>;      // AIN3-GND
+			gain = <2>;     // 2.048V (default)
+			datarate = <4>; // 1600Hz (default)
+		};
+	};
+
 	mux@71 {
 		compatible = "nxp,pca9548";
 		reg = <0x71>;
@@ -281,9 +263,15 @@
 				status = "okay";
 			};
 
-			o1_src4392: src4392@70 {
+			i1_es9820: es9820@20 {
 				compatible = "dummy";
-				reg = <0x70>;
+				reg = <0x20>;
+				status = "okay";
+			};
+
+			i1_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x24>;
 				status = "okay";
 			};
 		};
@@ -291,7 +279,7 @@
 		i2c@1 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <1>;
+			reg = <0>;
 
 			o2_es9033: es9033@48 {
 				compatible = "dummy";
@@ -305,9 +293,15 @@
 				status = "okay";
 			};
 
-			o2_src4392: src4392@70 {
+			i2_es9820: es9820@20 {
 				compatible = "dummy";
-				reg = <0x70>;
+				reg = <0x20>;
+				status = "okay";
+			};
+
+			i2_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x24>;
 				status = "okay";
 			};
 		};
@@ -315,7 +309,7 @@
 		i2c@2 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <2>;
+			reg = <0>;
 
 			o3_es9033: es9033@48 {
 				compatible = "dummy";
@@ -329,9 +323,15 @@
 				status = "okay";
 			};
 
-			o3_src4392: src4392@70 {
+			i3_es9820: es9820@20 {
 				compatible = "dummy";
-				reg = <0x70>;
+				reg = <0x20>;
+				status = "okay";
+			};
+
+			i3_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x24>;
 				status = "okay";
 			};
 		};
@@ -339,7 +339,7 @@
 		i2c@3 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <3>;
+			reg = <0>;
 
 			o4_es9033: es9033@48 {
 				compatible = "dummy";
@@ -353,9 +353,15 @@
 				status = "okay";
 			};
 
-			o4_src4392: src4392@70 {
+			i4_es9820: es9820@20 {
 				compatible = "dummy";
-				reg = <0x70>;
+				reg = <0x20>;
+				status = "okay";
+			};
+
+			i4_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x24>;
 				status = "okay";
 			};
 		};
@@ -363,7 +369,7 @@
 		i2c@4 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <4>;
+			reg = <0>;
 
 			o5_es9033: es9033@48 {
 				compatible = "dummy";
@@ -377,7 +383,7 @@
 				status = "okay";
 			};
 
-			o5_src4392: src4392@70 {
+			i5_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -387,29 +393,23 @@
 		i2c@5 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <5>;
+			reg = <0>;
 
-			i1_es9820: es9820@20 {
+			o6_es9033: es9033@48 {
 				compatible = "dummy";
-				reg = <0x20>;
+				reg = <0x48>;
 				status = "okay";
 			};
 
-			i1_es9820_sync: es9820@24 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
+			o6_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
 				compatible = "dummy";
-				reg = <0x24>;
+				reg = <0x4c>;
 				status = "okay";
 			};
 
-			i2_es9820: es9820@21 {
+			i6_src4392: src4392@70 {
 				compatible = "dummy";
-				reg = <0x21>;
-				status = "okay";
-			};
-
-			i2_es9820_sync: es9820@25 {  // before es9820 has clock initialized, _sync address must be used for write-only initialization of clock registers
-				compatible = "dummy";
-				reg = <0x25>;
+				reg = <0x70>;
 				status = "okay";
 			};
 		};
@@ -417,9 +417,27 @@
 		i2c@6 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <6>;
+			reg = <0>;
 
-			i3_src4392: src4392@70 {
+			o7_es9033: es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			o7_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o7_src4392: src4392@72 {
+				compatible = "dummy";
+				reg = <0x72>;
+				status = "okay";
+			};
+
+			i7_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -429,9 +447,27 @@
 		i2c@7 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			reg = <7>;
+			reg = <0>;
 
-			i4_src4392: src4392@70 {
+			o8_es9033: es9033@48 {
+				compatible = "dummy";
+				reg = <0x48>;
+				status = "okay";
+			};
+
+			o8_es9033_sync: es9033@4c {  // before es9033 has clock initialized, _sync address must be used for write-only initialization of clock registers
+				compatible = "dummy";
+				reg = <0x4c>;
+				status = "okay";
+			};
+
+			o8_src4392: src4392@72 {
+				compatible = "dummy";
+				reg = <0x72>;
+				status = "okay";
+			};
+
+			i8_src4392: src4392@70 {
 				compatible = "dummy";
 				reg = <0x70>;
 				status = "okay";
@@ -440,41 +476,9 @@
 	};
 };
 
-&irqsteer_hdmi {
-	status = "okay";
-};
-
-&hdmi_blk_ctrl {
-	status = "okay";
-};
-
-&hdmi_pavi {
-	status = "okay";
-};
-
-&hdmi {
-	status = "okay";
-};
-
-&hdmiphy {
-	status = "okay";
-};
-
-/* MIPI-DSI */
-&lcdif1 {
-	status = "disabled";
-};
-
 /* LVDS */
 &lcdif2 {
 	status = "okay";
-};
-
-/* HDMI */
-&lcdif3 {
-	status = "okay";
-	thres-low  = <1 2>;	/* (FIFO * 1 / 2) */
-	thres-high = <3 4>;	/* (FIFO * 3 / 4) */
 };
 
 &ldb {
@@ -499,10 +503,6 @@
 	status = "okay";
 };
 
-&mipi_dsi {
-	status = "disabled";
-};
-
 &pcie {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_pcie>;
@@ -522,23 +522,6 @@
 	status = "okay";
 };
 
-&pcie_ep {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_pcie>;
-	ext_osc = <1>;
-	clocks = <&clk IMX8MP_CLK_HSIO_ROOT>,
-		 <&clk IMX8MP_CLK_PCIE_AUX>,
-		 <&clk IMX8MP_CLK_HSIO_AXI>,
-		 <&clk IMX8MP_CLK_PCIE_ROOT>;
-	clock-names = "pcie", "pcie_aux", "pcie_phy", "pcie_bus";
-	assigned-clocks = <&clk IMX8MP_CLK_HSIO_AXI>,
-			  <&clk IMX8MP_CLK_PCIE_AUX>;
-	assigned-clock-rates = <500000000>, <10000000>;
-	assigned-clock-parents = <&clk IMX8MP_SYS_PLL2_500M>,
-				 <&clk IMX8MP_SYS_PLL2_50M>;
-	status = "disabled";
-};
-
 &pcie_phy {
 	ext_osc = <1>;
 	status = "okay";
@@ -552,12 +535,6 @@
 };
 
 &usb3_phy0 {
-//	fsl,phy-tx-vref-tune = <0xe>;
-//	fsl,phy-tx-preemp-amp-tune = <3>;
-//	fsl,phy-tx-vboost-level = <5>;
-//	fsl,phy-comp-dis-tune = <7>;
-//	fsl,pcs-tx-deemph-3p5db = <0x21>;
-//	fsl,phy-pcs-tx-swing-full = <0x7f>;
 	status = "okay";
 };
 
@@ -567,17 +544,11 @@
 
 &usb_dwc3_0 {
 	dr_mode = "host";
-//	dr_mode = "otg";
-//	hnp-disable;
-//	srp-disable;
-//	adp-disable;
 	extcon = <&extcon_usb1>;
 	status = "okay";
 };
 
 &usb3_phy1 {
-//	fsl,phy-tx-preemp-amp-tune = <3>;
-//	fsl,phy-tx-vref-tune = <0xb>;
 	status = "okay";
 };
 
@@ -622,32 +593,6 @@
 	fsl,sai-multi-lane;
 	fsl,dataline = <0 0xff 0xff>;
 	dmas = <&sdma2 0 25 0>, <&sdma2 1 25 0>;
-	status = "okay";
-};
-
-&sai2 {
-	#sound-dai-cells = <0>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_sai2>;
-	assigned-clocks = <&clk IMX8MP_CLK_SAI1>,<&clk IMX8MP_CLK_SAI2>;
-	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>,<&clk IMX8MP_AUDIO_PLL2_OUT>;
-	assigned-clock-rates = <24576000>,<22579200>;
-	clocks = 
-		 <&audio_blk_ctrl IMX8MP_CLK_AUDIO_BLK_CTRL_SAI2_IPG>, 
-		 <&clk IMX8MP_CLK_DUMMY>,
-		 <&audio_blk_ctrl IMX8MP_CLK_AUDIO_BLK_CTRL_SAI2_MCLK1>, 
-		 <&audio_blk_ctrl IMX8MP_CLK_AUDIO_BLK_CTRL_SAI2_MCLK2>, 
-		 <&clk IMX8MP_CLK_DUMMY>,
-		 <&clk IMX8MP_AUDIO_PLL1_OUT>,
-		 <&clk IMX8MP_AUDIO_PLL2_OUT>;
-	clock-names = "bus", "mclk0", "mclk1", "mclk2", "mclk3", "pll8k", "pll11k";
-	fsl,sai-asynchronous;
-	fsl,sai-mclk-direction-output;
-	status = "okay";
-};
-
-&xcvr {
-	#sound-dai-cells = <0>;
 	status = "okay";
 };
 
@@ -714,7 +659,7 @@
 		"USDHC2_D1",             // 048 GPIO2_IO16 (pin 63)
 		"USDHC2_D2",             // 049 GPIO2_IO17 (pin 61)
 		"USDHC2_D3",             // 050 GPIO2_IO18 (pin 65)
-		"",                      // 051 GPIO2_IO19
+		"USDHC2_VMMC",           // 051 GPIO2_IO19
 		"REG_EQOS",              // 052 GPIO2_IO20
 		"",                      // 053 GPIO2_IO21
 		"",                      // 054 GPIO2_IO22
@@ -736,7 +681,7 @@
 		"USDHC3_D5",             // 067 GPIO3_IO03
 		"USDHC3_D6",             // 068 GPIO3_IO04
 		"USDHC3_D7",             // 069 GPIO3_IO05
-		"",                      // 070 GPIO3_IO06 (pin 84)
+		"",                      // 070 GPIO3_IO06 (pin 84) (DO NOT USE)
 		"",                      // 071 GPIO3_IO07
 		"",                      // 072 GPIO3_IO08
 		"",                      // 073 GPIO3_IO09
@@ -744,7 +689,7 @@
 		"USDHC3_D1",             // 075 GPIO3_IO11
 		"USDHC3_D2",             // 076 GPIO3_IO12
 		"USDHC3_D3",             // 077 GPIO3_IO13
-		"",                      // 078 GPIO3_IO14 (pin 79)
+		"",                      // 078 GPIO3_IO14 (pin 79) (DO NOT USE)
 		"USDHC3_D4",             // 079 GPIO3_IO15
 		"",                      // 080 GPIO3_IO16
 		"USDHC3_CLK",            // 081 GPIO3_IO17
@@ -756,10 +701,10 @@
 		"",                      // 087 GPIO3_IO23
 		"",                      // 088 GPIO3_IO24
 		"",                      // 089 GPIO3_IO25
-		"HDMI_SCL",              // 090 GPIO3_IO26 (pin 174)
-		"HDMI_SDA",              // 091 GPIO3_IO27 (pin 176)
-		"HDMI_CEC",              // 092 GPIO3_IO28 (pin 156)
-		"HDMI_HPD",              // 093 GPIO3_IO29 (pin 154)
+		"",                      // 090 GPIO3_IO26 (pin 174)
+		"",                      // 091 GPIO3_IO27 (pin 176)
+		"",                      // 092 GPIO3_IO28 (pin 156)
+		"",                      // 093 GPIO3_IO29 (pin 154)
 		"",                      // 094 GPIO3_IO30
 		"";                      // 095 GPIO3_IO31
 };
@@ -771,10 +716,10 @@
 		"SAI1_RX_D01",           // 099 GPIO4_IO03 (pin 117)
 		"SAI1_RX_D02",           // 100 GPIO4_IO04 (pin 72)
 		"SAI1_RX_D03",           // 101 GPIO4_IO05 (pin 75)
-		"clkselo1",              // 102 GPIO4_IO06 (pin 122)
-		"clkselo2",              // 103 GPIO4_IO07 (pin 81)
-		"clkselo3",              // 104 GPIO4_IO08 (pin 71)
-		"clkselo4",              // 105 GPIO4_IO09 (pin 54)
+		"SAI1_RX_D04",           // 102 GPIO4_IO06 (pin 122)
+		"SAI1_RX_D05",           // 103 GPIO4_IO07 (pin 81)
+		"SAI1_RX_D06",           // 104 GPIO4_IO08 (pin 71)
+		"SAI1_RX_D07",           // 105 GPIO4_IO09 (pin 54)
 		"SAI1_TX_SYNC",          // 106 GPIO4_IO10 (pin 120)
 		"SAI1_TX_BCLK",          // 107 GPIO4_IO11 (pin 57)
 		"SAI1_TX_D00",           // 108 GPIO4_IO12 (pin 73)
@@ -782,17 +727,17 @@
 		"SAI1_TX_D02",           // 110 GPIO4_IO14 (pin 56)
 		"SAI1_TX_D03",           // 111 GPIO4_IO15 (pin 55)
 		"SAI1_TX_D04",           // 112 GPIO4_IO16 (pin 113)
-		"clkselo5",              // 113 GPIO4_IO17 (pin 96)
-		"",                      // 114 GPIO4_IO18 (pin 77)
-		"",                      // 115 GPIO4_IO19 (pin 173)
+		"SAI1_TX_D05",           // 113 GPIO4_IO17 (pin 96)
+		"SAI1_TX_D06",           // 114 GPIO4_IO18 (pin 77)
+		"SAI1_TX_D07",           // 115 GPIO4_IO19 (pin 173)
 		"SAI1_MCLK",             // 116 GPIO4_IO20 (pin 40)
-		"",                      // 117 GPIO4_IO21 (pin 23)
-		"USDHC2_VMMC",           // 118 GPIO4_IO22 (pin 22)
-		"",                      // 119 GPIO4_IO23 (pin 21)
-		"SAI2_TX_SYNC",          // 120 GPIO4_IO24 (pin 24)
-		"SAI2_TX_BCLK",          // 121 GPIO4_IO25 (pin 25)
-		"SAI2_TX_D00",           // 122 GPIO4_IO26 (pin 26)
-		"SAI2_MCLK",             // 123 GPIO4_IO27 (pin 48)
+		"out_ampen",             // 117 GPIO4_IO21 (pin 23)
+		"out_ready_o1",          // 118 GPIO4_IO22 (pin 22)
+		"out_ready_o2",          // 119 GPIO4_IO23 (pin 21)
+		"out_ready_o3",          // 120 GPIO4_IO24 (pin 24)
+		"out_ready_o4",          // 121 GPIO4_IO25 (pin 25)
+		"out_ready_o5",          // 122 GPIO4_IO26 (pin 26)
+		"out_ready_o6",          // 123 GPIO4_IO27 (pin 48)
 		"trigin1_n",             // 124 GPIO4_IO28 (pin 196)
 		"trigin2_n",             // 125 GPIO4_IO29 (pin 197)
 		"trigin3_n",             // 126 GPIO4_IO30 (pin 198)
@@ -800,9 +745,9 @@
 };
 &gpio5 {
 	gpio-line-names = 
-		"trigout1",              // 128 GPIO5_IO00 (pin 200)
-		"trigout2",              // 129 GPIO5_IO01 (pin 18)
-		"trigout3",              // 130 GPIO5_IO02 (pin 20)
+		"",                      // 128 GPIO5_IO00 (pin 200)
+		"",                      // 129 GPIO5_IO01 (pin 18)
+		"",                      // 130 GPIO5_IO02 (pin 20)
 		"CTPINT",                // 131 GPIO5_IO03 (pin 68)
 		"PMIC_INT",              // 132 GPIO5_IO04
 		"BL_PWM",                // 133 GPIO5_IO05 (pin 17)
@@ -819,7 +764,7 @@
 		"I2C2_SCL",              // 144 GPIO5_IO16 (pin 193)
 		"I2C2_SDA",              // 145 GPIO5_IO17 (pin 191)
 		"CTPWAKE",               // 146 GPIO5_IO18 (pin 88)
-		"ICN6211_EN",            // 147 GPIO5_IO19 (pin 87)
+		"",                      // 147 GPIO5_IO19 (pin 87)
 		"I2C4_SCL",              // 148 GPIO5_IO20 (pin 92)
 		"I2C4_SDA",              // 149 GPIO5_IO21 (pin 90)
 		"hwrev0",                // 150 GPIO5_IO22 (pin 175)
@@ -827,9 +772,9 @@
 		"UART2_RX",              // 152 GPIO5_IO24 (pin 83)
 		"UART2_TX",              // 153 GPIO5_IO25 (pin 85)
 		"pwroff",                // 154 GPIO5_IO26 (pin 44)
-		"",                      // 155 GPIO5_IO27 (pin 46)
-		"trigout4",              // 156 GPIO5_IO28 (pin 115)
-		"trigout5",              // 157 GPIO5_IO29 (pin 171)
+		"ampdcfault_n",          // 155 GPIO5_IO27 (pin 46)
+		"amppwr_n",              // 156 GPIO5_IO28 (pin 115)
+		"",                      // 157 GPIO5_IO29 (pin 171)
 		"",                      // 158 GPIO5_IO30
 		"";                      // 159 GPIO5_IO31
 };
@@ -840,22 +785,13 @@
 
 	pinctrl_hog: hoggrp {
 		fsl,pins = <
-			MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL			0x400001c3
-			MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA			0x400001c3
-			MX8MP_IOMUXC_HDMI_HPD__HDMIMIX_HDMI_HPD				0x40000019
-			MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC				0x40000019
-
-
 			MX8MP_IOMUXC_GPIO1_IO11__GPIO1_IO11					0x00
 
-			MX8MP_IOMUXC_SAI3_RXFS__GPIO4_IO28					0x00
-			MX8MP_IOMUXC_SAI3_RXC__GPIO4_IO29					0x00
-			MX8MP_IOMUXC_SAI3_RXD__GPIO4_IO30					0x00
-			MX8MP_IOMUXC_SAI3_TXFS__GPIO4_IO31					0x00
+			MX8MP_IOMUXC_SAI3_RXFS__GPIO4_IO28					0xc6
+			MX8MP_IOMUXC_SAI3_RXC__GPIO4_IO29					0xc6
+			MX8MP_IOMUXC_SAI3_RXD__GPIO4_IO30					0xc6
+			MX8MP_IOMUXC_SAI3_TXFS__GPIO4_IO31					0xc6
 
-			MX8MP_IOMUXC_SAI3_TXC__GPIO5_IO00					0xc6
-			MX8MP_IOMUXC_SAI3_TXD__GPIO5_IO01					0xc6
-			MX8MP_IOMUXC_SAI3_MCLK__GPIO5_IO02					0xc6
 			MX8MP_IOMUXC_ECSPI1_SCLK__GPIO5_IO06				0x00
 			MX8MP_IOMUXC_ECSPI1_MOSI__GPIO5_IO07				0x00
 			MX8MP_IOMUXC_ECSPI1_MISO__GPIO5_IO08				0x00
@@ -865,8 +801,32 @@
 			MX8MP_IOMUXC_ECSPI2_SS0__GPIO5_IO13					0xc6
 			MX8MP_IOMUXC_UART1_RXD__GPIO5_IO22					0x00
 			MX8MP_IOMUXC_UART1_TXD__GPIO5_IO23					0x00
+
+			MX8MP_IOMUXC_SAI2_RXFS__GPIO4_IO21					0x00
+			MX8MP_IOMUXC_SAI2_RXC__GPIO4_IO22					0x00
+			MX8MP_IOMUXC_SAI2_RXD0__GPIO4_IO23					0x00
+			MX8MP_IOMUXC_SAI2_TXFS__GPIO4_IO24					0x00
+			MX8MP_IOMUXC_SAI2_TXC__GPIO4_IO25					0x00
+			MX8MP_IOMUXC_SAI2_TXD0__GPIO4_IO26					0x00
+			MX8MP_IOMUXC_SAI2_MCLK__GPIO4_IO27					0x00
+
+			MX8MP_IOMUXC_UART3_RXD__GPIO5_IO26					0x00
+			MX8MP_IOMUXC_UART3_TXD__GPIO5_IO27					0x00
+
 			MX8MP_IOMUXC_UART4_RXD__GPIO5_IO28					0xc6
+
+			// Unused Pins
+			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x00
+			MX8MP_IOMUXC_SAI3_TXC__GPIO5_IO00					0xc6
+			MX8MP_IOMUXC_SAI3_TXD__GPIO5_IO01					0xc6
+			MX8MP_IOMUXC_SAI3_MCLK__GPIO5_IO02					0xc6
 			MX8MP_IOMUXC_UART4_TXD__GPIO5_IO29					0xc6
+			MX8MP_IOMUXC_HDMI_DDC_SCL__GPIO3_IO26				0x00
+			MX8MP_IOMUXC_HDMI_DDC_SDA__GPIO3_IO27				0x00
+			MX8MP_IOMUXC_HDMI_CEC__GPIO3_IO28					0x00
+			MX8MP_IOMUXC_HDMI_HPD__GPIO3_IO29					0x00
+			MX8MP_IOMUXC_I2C1_SCL__GPIO5_IO14					0x00
+			MX8MP_IOMUXC_I2C1_SDA__GPIO5_IO15					0x00
 		>;
 	};
 
@@ -944,6 +904,7 @@
 			MX8MP_IOMUXC_ECSPI2_MOSI__GPIO5_IO11				0x40
 		>;
 	};
+
 	pinctrl_sai1: sai1grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_SAI1_MCLK__AUDIOMIX_SAI1_MCLK			0xd6
@@ -953,6 +914,10 @@
 			MX8MP_IOMUXC_SAI1_RXD1__AUDIOMIX_SAI1_RX_DATA01		0xd6
 			MX8MP_IOMUXC_SAI1_RXD2__AUDIOMIX_SAI1_RX_DATA02		0xd6
 			MX8MP_IOMUXC_SAI1_RXD3__AUDIOMIX_SAI1_RX_DATA03		0xd6
+			MX8MP_IOMUXC_SAI1_RXD4__AUDIOMIX_SAI1_RX_DATA04		0xd6
+			MX8MP_IOMUXC_SAI1_RXD5__AUDIOMIX_SAI1_RX_DATA05		0xd6
+			MX8MP_IOMUXC_SAI1_RXD6__AUDIOMIX_SAI1_RX_DATA06		0xd6
+			MX8MP_IOMUXC_SAI1_RXD7__AUDIOMIX_SAI1_RX_DATA07		0xd6
 			MX8MP_IOMUXC_SAI1_TXFS__AUDIOMIX_SAI1_TX_SYNC		0xd6
 			MX8MP_IOMUXC_SAI1_TXC__AUDIOMIX_SAI1_TX_BCLK		0xd6
 			MX8MP_IOMUXC_SAI1_TXD0__AUDIOMIX_SAI1_TX_DATA00		0xd6
@@ -960,15 +925,9 @@
 			MX8MP_IOMUXC_SAI1_TXD2__AUDIOMIX_SAI1_TX_DATA02		0xd6
 			MX8MP_IOMUXC_SAI1_TXD3__AUDIOMIX_SAI1_TX_DATA03		0xd6
 			MX8MP_IOMUXC_SAI1_TXD4__AUDIOMIX_SAI1_TX_DATA04		0xd6
-		>;
-	};
-
-	pinctrl_sai2: sai2grp {
-		fsl,pins = <
-			MX8MP_IOMUXC_SAI2_MCLK__AUDIOMIX_SAI2_MCLK			0xd6
-			MX8MP_IOMUXC_SAI2_TXFS__AUDIOMIX_SAI2_TX_SYNC		0xd6
-			MX8MP_IOMUXC_SAI2_TXC__AUDIOMIX_SAI2_TX_BCLK		0xd6
-			MX8MP_IOMUXC_SAI2_TXD0__AUDIOMIX_SAI2_TX_DATA00		0xd6
+			MX8MP_IOMUXC_SAI1_TXD5__AUDIOMIX_SAI1_TX_DATA05		0xd6
+			MX8MP_IOMUXC_SAI1_TXD6__AUDIOMIX_SAI1_TX_DATA06		0xd6
+			MX8MP_IOMUXC_SAI1_TXD7__AUDIOMIX_SAI1_TX_DATA07		0xd6
 		>;
 	};
 
@@ -978,15 +937,15 @@
 		>;
 	};
 
-	pinctrl_icn6211: icn6211grp {
-		fsl,pins = <
-			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x01
-		>;
-	};
-
 	pinctrl_pwm1: pwm1grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_SPDIF_EXT_CLK__PWM1_OUT				0x116
+		>;
+	};
+
+	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
+		fsl,pins = <
+			MX8MP_IOMUXC_SD2_RESET_B__GPIO2_IO19	0x41
 		>;
 	};
 };
