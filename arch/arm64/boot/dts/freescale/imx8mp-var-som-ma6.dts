@@ -764,7 +764,7 @@
 		"I2C2_SCL",              // 144 GPIO5_IO16 (pin 193)
 		"I2C2_SDA",              // 145 GPIO5_IO17 (pin 191)
 		"CTPWAKE",               // 146 GPIO5_IO18 (pin 88)
-		"",                      // 147 GPIO5_IO19 (pin 87)
+		"amppwr_n",              // 147 GPIO5_IO19 (pin 87)
 		"I2C4_SCL",              // 148 GPIO5_IO20 (pin 92)
 		"I2C4_SDA",              // 149 GPIO5_IO21 (pin 90)
 		"hwrev0",                // 150 GPIO5_IO22 (pin 175)
@@ -773,8 +773,8 @@
 		"UART2_TX",              // 153 GPIO5_IO25 (pin 85)
 		"pwroff",                // 154 GPIO5_IO26 (pin 44)
 		"ampdcfault_n",          // 155 GPIO5_IO27 (pin 46)
-		"amppwr_n",              // 156 GPIO5_IO28 (pin 115)
-		"",                      // 157 GPIO5_IO29 (pin 171)
+		"clksel_o7",             // 156 GPIO5_IO28 (pin 115)
+		"clksel_o8",             // 157 GPIO5_IO29 (pin 171)
 		"",                      // 158 GPIO5_IO30
 		"";                      // 159 GPIO5_IO31
 };
@@ -813,14 +813,15 @@
 			MX8MP_IOMUXC_UART3_RXD__GPIO5_IO26					0x00
 			MX8MP_IOMUXC_UART3_TXD__GPIO5_IO27					0x00
 
+			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0xc6
+
 			MX8MP_IOMUXC_UART4_RXD__GPIO5_IO28					0xc6
+			MX8MP_IOMUXC_UART4_TXD__GPIO5_IO29					0xc6
 
 			// Unused Pins
-			MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19					0x00
 			MX8MP_IOMUXC_SAI3_TXC__GPIO5_IO00					0xc6
 			MX8MP_IOMUXC_SAI3_TXD__GPIO5_IO01					0xc6
 			MX8MP_IOMUXC_SAI3_MCLK__GPIO5_IO02					0xc6
-			MX8MP_IOMUXC_UART4_TXD__GPIO5_IO29					0xc6
 			MX8MP_IOMUXC_HDMI_DDC_SCL__GPIO3_IO26				0x00
 			MX8MP_IOMUXC_HDMI_DDC_SDA__GPIO3_IO27				0x00
 			MX8MP_IOMUXC_HDMI_CEC__GPIO3_IO28					0x00
